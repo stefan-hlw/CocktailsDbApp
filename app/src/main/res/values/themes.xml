@@ -6,4 +6,7 @@
     </style>
 
     <style name="Theme.CocktailsDbApp" parent="Base.Theme.CocktailsDbApp" />
+<style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <item name="android:windowBackground">@drawable/splash_bg_gradient</item>
+</style>
 </resources>
