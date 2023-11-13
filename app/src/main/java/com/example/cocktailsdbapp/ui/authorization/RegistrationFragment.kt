@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentRegistrationBinding
 
-class RegistrationFragment : Fragment() {
+class RegistrationFragment : ImagePickerFragment() {
 
     private var _binding: FragmentRegistrationBinding? = null
     private val binding get() = _binding!!
@@ -21,8 +22,29 @@ class RegistrationFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        registerListeners()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun registerListeners() {
+        binding.tvLoginHere.setOnClickListener {
+            findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+        }
+        binding.registrationButton.setOnClickListener {
+            if (checkCameraPermission()) {
+                showOptionDialog()
+            } else {
+                // Permission not granted, request it
+                requestCameraPermission()
+            }
+        }
+    }
+
 }

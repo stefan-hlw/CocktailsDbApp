@@ -66,7 +66,7 @@
         app:layout_constraintTop_toBottomOf="@+id/password_text" />
 
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/registration_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20sp"
@@ -77,20 +77,20 @@
 
 
     <TextView
-        android:id="@+id/dont_have_account"
+        android:id="@+id/tv_already_have_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24sp"
         android:textColor="@color/white"
         android:text="Already have an account? Click"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/register_here"
+        app:layout_constraintEnd_toStartOf="@+id/tv_login_here"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/register_here"
+        android:id="@+id/tv_login_here"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24sp"
@@ -101,6 +101,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@+id/dont_have_account" />
+        app:layout_constraintStart_toEndOf="@+id/tv_already_have_account" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
