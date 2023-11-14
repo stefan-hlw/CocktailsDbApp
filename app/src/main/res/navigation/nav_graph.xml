@@ -11,7 +11,11 @@
         <action
             android:id="@+id/action_loginFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_cocktailsFragment"
+            app:destination="@id/cocktailsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/registrationFragment"
         android:name="com.example.cocktailsdbapp.ui.authorization.RegistrationFragment"
@@ -20,7 +24,23 @@
             android:id="@+id/action_registrationFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_registrationFragment"
-            app:destination="@id/registrationFragment" />
+            android:id="@+id/action_registrationFragment_to_cocktailsFragment"
+            app:destination="@id/cocktailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/cocktailsFragment"
+        android:name="com.example.cocktailsdbapp.ui.cocktails.CocktailsFragment"
+        android:label="CocktailsFragment" >
+    </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.cocktailsdbapp.ui.cocktails.FavoritesFragment"
+        android:label="FavoritesFragment" >
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.cocktailsdbapp.ui.authorization.ProfileFragment"
+        android:label="ProfileFragment" >
     </fragment>
 </navigation>

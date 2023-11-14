@@ -1,3 +1,14 @@
 <resources>
-    <string name="app_name">CocktailsDbApp</string>
+    <string name="app_name">Cocktail9</string>
+    <string name="registar">RegiStar</string>
+    <string name="login">LoGin</string>
+
+    <string name="hint_input_name">name</string>
+    <string name="hint_input_email">email</string>
+    <string name="hint_input_password">password</string>
+
+    <string name="button_register">Register</string>
+    <string name="button_login">Login</string>
+
+    <string name="spacer_text">or</string>
 </resources>

@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <item
+        android:id="@+id/cocktailsFragment"
+        android:icon="@drawable/ic_bottom_nav_cocktails"
+        android:title="Cocktails"/>
+    <item
+        android:id="@+id/favoritesFragment"
+        android:icon="@drawable/ic_favorite_off"
+        android:title="Favorites"/>
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_profile"
+        android:title="Profile"/>
 </menu>
