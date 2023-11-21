@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentLoginBinding
+import com.example.cocktailsdbapp.utils.makeLastNCharactersBold
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,6 +32,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         registerListeners()
+        binding.tvLogin.makeLastNCharactersBold(3)
     }
 
     override fun onDestroyView() {
@@ -46,4 +48,5 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
         }
     }
+
 }

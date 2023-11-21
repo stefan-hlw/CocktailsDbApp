@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.cocktailsdbapp.MainActivity
 import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentRegistrationBinding
 import com.example.cocktailsdbapp.model.User
+import com.example.cocktailsdbapp.utils.makeLastNCharactersBold
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,6 +35,7 @@ class RegistrationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         registerListeners()
+        binding.tvRegister.makeLastNCharactersBold(4)
     }
 
     override fun onDestroyView() {
@@ -50,6 +53,7 @@ class RegistrationFragment : Fragment() {
             val password = binding.etPasswordInput.text.toString()
             val success = authViewModel.saveUserData(User(name, email, password))
             if(success) {
+                (activity as MainActivity).currentUser = email
                 findNavController().navigate(R.id.action_registrationFragment_to_cocktailsFragment)
             }
         }

@@ -2,7 +2,8 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.CocktailsDbApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/main_banana</item>
+        <item name="colorSecondary">@color/secondary_amber</item>
         <item name="android:fontFamily">@font/caveat</item>
     </style>
 </resources>

@@ -4,15 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.example.cocktailsdbapp.MainActivity
+import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentCocktailsBinding
-import com.example.cocktailsdbapp.network.Cocktail
+import com.example.cocktailsdbapp.model.Cocktail
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CocktailsFragment: Fragment() {
+class CocktailsFragment: Fragment(), CocktailAdapter.OnFavoriteClickListener, CocktailAdapter.OnItemClickListener {
 
     private var _binding: FragmentCocktailsBinding? = null
     private val binding get() = _binding!!
@@ -33,7 +36,11 @@ class CocktailsFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObservers()
-        cocktailsViewModel.fetchData()
+        (activity as MainActivity).let { mainActivity ->
+            mainActivity.currentUser?.let { cocktailsViewModel.fetchData(it) }
+            mainActivity.showSearchView(true)
+            mainActivity.showFilterView(true)
+        }
 
     }
 
@@ -53,8 +60,26 @@ class CocktailsFragment: Fragment() {
 
     private fun setCocktailsAdapter(cocktails: List<Cocktail>?) {
         cocktailAdapter = cocktails?.let { CocktailAdapter(it) }
-//        cocktailAdapter?.setOnItemClickListener(this)
+        cocktailAdapter?.setOnItemClickListener(this)
+        cocktailAdapter?.setOnFavoriteClickListener(this)
         binding.rvCocktails.adapter = cocktailAdapter
+    }
+
+    private fun setListeners() {
+    }
+
+    override fun favoriteCocktail(cocktail: Cocktail) {
+        (activity as MainActivity).currentUser?.let {
+            cocktailsViewModel.favoriteCocktail(
+                it,
+                cocktail
+            )
+        }
+    }
+
+    override fun openCocktailDetails(cocktailId: String) {
+        val args = bundleOf("cocktailId" to cocktailId)
+        findNavController().navigate(R.id.action_cocktailsFragment_to_CocktailDetailsFragment, args)
     }
 
 }

@@ -2,11 +2,13 @@ package com.example.cocktailsdbapp.ui.cocktails
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.ItemCocktailBinding
-import com.example.cocktailsdbapp.network.Cocktail
+import com.example.cocktailsdbapp.model.Cocktail
 
 class CocktailAdapter(private val cocktailList: List<Cocktail>) : RecyclerView.Adapter<CocktailAdapter.CocktailViewHolder>() {
 
@@ -14,6 +16,10 @@ class CocktailAdapter(private val cocktailList: List<Cocktail>) : RecyclerView.A
     private val binding get() = _binding!!
 
     private var cocktails: List<Cocktail> = emptyList()
+
+    private var onItemClickListener: OnItemClickListener? = null
+
+    private var onFavoriteClickListener: OnFavoriteClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CocktailViewHolder {
         _binding = ItemCocktailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -33,7 +39,28 @@ class CocktailAdapter(private val cocktailList: List<Cocktail>) : RecyclerView.A
         fun bindView(cocktail: Cocktail) {
             with(binding) {
                 tvCocktailName.text = cocktail.strDrink
-//                imageViewFavorite.drawable =
+                if (cocktail.isFavorite) {
+                    ivFavorite.isSelected = true
+                }
+
+                cvItem.setOnClickListener {
+                    onItemClickListener?.openCocktailDetails(cocktail.idDrink)
+                }
+                ivFavorite.setOnClickListener {
+                    ivFavorite.isSelected = !ivFavorite.isSelected
+
+                    // Load the animation
+                    val animationId = if (ivFavorite.isSelected) {
+                        R.anim.ic_favorite_animation // Selection animation
+                    } else {
+                        R.anim.ic_favorite_animation_deselect // Deselection animation
+                    }
+                    val animation = AnimationUtils.loadAnimation(root.context, animationId)
+
+                    // Apply the animation to the ImageView
+                    ivFavorite.startAnimation(animation)
+                    onFavoriteClickListener?.favoriteCocktail(cocktail)
+                }
                 Glide.with(root.context)
                     .load(cocktail.strDrinkThumb)
 //                    .placeholder(R.drawable.placeholder_image)
@@ -42,6 +69,23 @@ class CocktailAdapter(private val cocktailList: List<Cocktail>) : RecyclerView.A
             }
         }
 
+    }
+
+    interface OnItemClickListener {
+        fun openCocktailDetails(cocktailId: String)
+    }
+
+    fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
+        this.onItemClickListener = onItemClickListener
+    }
+
+    interface OnFavoriteClickListener {
+        fun favoriteCocktail(cocktail: Cocktail)
+
+    }
+
+    fun setOnFavoriteClickListener(onFavoriteClickListener: OnFavoriteClickListener) {
+        this.onFavoriteClickListener = onFavoriteClickListener
     }
 
     fun updateData(newCocktails: List<Cocktail>) {

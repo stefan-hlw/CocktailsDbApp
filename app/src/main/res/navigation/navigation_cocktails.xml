@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_cocktails"
+    app:startDestination="@id/cocktailsFragment">
+
+    <fragment
+        android:id="@+id/cocktailsFragment"
+        android:name="com.example.cocktailsdbapp.ui.cocktails.CocktailsFragment"
+        android:label="CocktailsFragment" >
+        <action
+            android:id="@+id/action_cocktailsFragment_to_FilterFragment"
+            app:destination="@id/filterFragment" />
+        <action
+            android:id="@+id/action_cocktailsFragment_to_CocktailDetailsFragment"
+            app:destination="@id/cocktailDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/filterFragment"
+        android:name="com.example.cocktailsdbapp.ui.filter.FilterFragment"
+        android:label="FilterFragment" >
+    </fragment>
+
+    <action
+        android:id="@+id/action_global_filter_fragment"
+        app:destination="@id/filterFragment" />
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.cocktailsdbapp.ui.search.SearchFragment"
+        android:label="SearchFragment" >
+    </fragment>
+
+    <action
+        android:id="@+id/action_global_search_fragment"
+        app:destination="@id/searchFragment" />
+
+    <fragment
+        android:id="@+id/cocktailDetailsFragment"
+        android:name="com.example.cocktailsdbapp.ui.details.CocktailDetailsFragment"
+        android:label="CocktailDetailsFragment" >
+        <argument
+            android:name="cocktailId"
+            android:defaultValue=""
+            app:argType="string"
+            />
+    </fragment>
+</navigation>

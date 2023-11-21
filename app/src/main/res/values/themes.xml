@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/main_banana</item>
         <item name="colorSecondary">@color/secondary_amber</item>
         <item name="android:fontFamily">@font/caveat</item>
+        <item name="android:spotShadowAlpha">0.5</item>
     </style>
 
     <style name="Theme.CocktailsDbApp" parent="Base.Theme.CocktailsDbApp" />

@@ -4,6 +4,10 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/loginFragment">
 
+    <include app:graph="@navigation/navigation_cocktails"/>
+    <include app:graph="@navigation/navigation_favorites"/>
+    <include app:graph="@navigation/navigation_profile"/>
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.cocktailsdbapp.ui.authorization.LoginFragment"
@@ -13,7 +17,7 @@
             app:destination="@id/registrationFragment" />
         <action
             android:id="@+id/action_loginFragment_to_cocktailsFragment"
-            app:destination="@id/cocktailsFragment" />
+            app:destination="@+id/navigation_cocktails" />
     </fragment>
 
     <fragment
@@ -25,22 +29,7 @@
             app:destination="@id/loginFragment" />
         <action
             android:id="@+id/action_registrationFragment_to_cocktailsFragment"
-            app:destination="@id/cocktailsFragment" />
+            app:destination="@+id/navigation_cocktails" />
     </fragment>
 
-    <fragment
-        android:id="@+id/cocktailsFragment"
-        android:name="com.example.cocktailsdbapp.ui.cocktails.CocktailsFragment"
-        android:label="CocktailsFragment" >
-    </fragment>
-    <fragment
-        android:id="@+id/favoritesFragment"
-        android:name="com.example.cocktailsdbapp.ui.cocktails.FavoritesFragment"
-        android:label="FavoritesFragment" >
-    </fragment>
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.example.cocktailsdbapp.ui.authorization.ProfileFragment"
-        android:label="ProfileFragment" >
-    </fragment>
 </navigation>

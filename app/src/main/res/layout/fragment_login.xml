@@ -52,12 +52,15 @@
 
     <Button
         android:id="@+id/bt_login"
-        android:layout_width="@dimen/auth_button_width"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/auth_button_height"
         android:layout_marginTop="@dimen/login_button_margin_top"
         android:backgroundTint="@color/white"
         app:cornerRadius="0dp"
         android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:drawableLeft="@drawable/ic_login"
         android:text="@string/button_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -102,13 +105,16 @@
 
     <Button
         android:id="@+id/bt_register"
-        android:layout_width="@dimen/auth_button_width"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/auth_button_height"
         android:layout_marginTop="@dimen/register_button_margin_top"
         android:background="@drawable/button_auth_blur"
         app:cornerRadius="0dp"
         android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="17sp"
         android:text="@string/button_register"
+        android:drawableLeft="@drawable/ic_register_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_spacer" />
