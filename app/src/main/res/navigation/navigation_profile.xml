@@ -55,6 +55,12 @@
         app:destination="@id/searchFragment" />
 
     <action
+        android:id="@+id/action_profileFragment_to_initialState"
+        app:destination="@id/loginFragment"
+        app:popUpTo="@id/loginFragment"
+        app:popUpToInclusive="true" />
+
+    <action
         android:id="@+id/action_global_category_fragment"
         app:destination="@id/categoryFragment" />
 

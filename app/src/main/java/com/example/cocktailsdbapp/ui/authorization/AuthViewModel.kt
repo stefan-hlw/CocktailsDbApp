@@ -20,6 +20,7 @@ class AuthViewModel @Inject constructor(
         editor.putString("${userData.email}_email", userData.email)
         editor.putString("${userData.email}_password", userData.password)
         editor.apply()
+        userPool.add(userData.email)
         return true
     }
 
@@ -30,4 +31,39 @@ class AuthViewModel @Inject constructor(
             return User(name, email, password)
         }
 
+    fun isUserInfoValid(userEmail: String, password: String): Boolean {
+        val email = sharedPreferences.getString("${userEmail}_name", "")
+        val pass = sharedPreferences.getString("${userEmail}_password", "")
+        if(email.isNullOrEmpty() || pass.isNullOrEmpty()) {
+            return false
+        }
+        return true
+    }
+
+    fun editUserName(userEmail: String, newName: String) {
+        // Get the current user data
+        val currentUser = getUserData(userEmail)
+
+        // Update the name
+        val updatedUser = currentUser?.copy(name = newName)
+
+        // Save the updated user data back to shared preferences
+        with(sharedPreferences.edit()) {
+            putString("${userEmail}_name", updatedUser?.name)
+            apply()
+        }
+    }
+    fun editPassword(userEmail: String, newPassword: String) {
+        // Get the current user data
+        val currentUser = getUserData(userEmail)
+
+        // Update the name
+        val updatedUser = currentUser?.copy(password = newPassword)
+
+        // Save the updated user data back to shared preferences
+        with(sharedPreferences.edit()) {
+            putString("${userEmail}_password", updatedUser?.password)
+            apply()
+        }
+    }
 }

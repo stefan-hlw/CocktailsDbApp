@@ -78,6 +78,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/expand_text_view"
+        android:textSize="19sp"
         android:text="Ingredients: "
         />
 

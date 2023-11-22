@@ -25,7 +25,7 @@
         android:layout_height="@dimen/input_field_height"
         android:background="@color/white"
         android:textColor="@color/black"
-        android:inputType="textEmailAddress"
+        android:inputType="textPersonName"
         android:hint="@string/hint_input_name"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"

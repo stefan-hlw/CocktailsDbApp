@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -46,6 +47,7 @@ class CocktailsFragment: Fragment(), CocktailAdapter.OnFavoriteClickListener, Co
             mainActivity.showSearchInputView(false)
             mainActivity.showFilterView(true)
         }
+        disableBackButton()
 
     }
 
@@ -89,6 +91,17 @@ class CocktailsFragment: Fragment(), CocktailAdapter.OnFavoriteClickListener, Co
     override fun openCocktailDetails(cocktailId: String) {
         val args = bundleOf("cocktailId" to cocktailId)
         findNavController().navigate(R.id.action_cocktailsFragment_to_CocktailDetailsFragment, args)
+    }
+
+    private fun disableBackButton() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // this disables the Android native back button
+                }
+            }
+        )
     }
 
 }
