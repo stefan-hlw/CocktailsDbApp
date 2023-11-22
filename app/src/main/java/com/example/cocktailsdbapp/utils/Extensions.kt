@@ -7,6 +7,7 @@ import android.text.style.StyleSpan
 import android.widget.TextView
 import com.example.cocktailsdbapp.database.RoomCocktail
 import com.example.cocktailsdbapp.model.Cocktail
+import com.example.cocktailsdbapp.model.CocktailDetails
 import com.example.cocktailsdbapp.model.CocktailDetailsResponse
 import com.example.cocktailsdbapp.model.CocktailResponse
 
@@ -31,28 +32,34 @@ fun TextView.makeLastNCharactersBold(n: Int) {
     }
 }
 
-fun CocktailResponse.markFavorites(favorites: List<RoomCocktail>): CocktailResponse {
-    // Extract cocktail ids from the favorite list
-    val favNames = favorites.map { it.idDrink }
+fun CocktailResponse?.markFavorites(favorites: List<RoomCocktail>?): CocktailResponse? {
+    // Check if either the response or favorites is null
+    if (this == null || favorites.isNullOrEmpty()) {
+        return this
+    }
+
+    // Create a map from the drinks list for faster lookups
+    val drinksMap = drinks?.associateBy { it.idDrink }
 
     // Mark cocktails received from API as favorite if they are already saved
-    drinks.filter { it.strDrink in favNames }
-        .forEach { commonCocktail ->
-            commonCocktail.isFavorite = true
-        }
+    favorites.forEach { favorite ->
+        drinksMap?.get(favorite.idDrink)?.isFavorite = true
+    }
 
     return this
 }
-fun CocktailDetailsResponse.markFavorites(favorites: List<RoomCocktail>): CocktailDetailsResponse {
-    // Extract cocktail ids from the favorite list
-    val favNames = favorites.map { it.idDrink }
 
-    // Mark cocktails received from API as favorite if they are already saved
-    drinks.filter { it.strDrink in favNames }
-        .forEach { commonCocktail ->
-            commonCocktail.isFavorite = true
-        }
+fun CocktailDetails.toCocktail(): Cocktail {
+    return Cocktail(
+        strDrink = strDrink ?: "",
+        strDrinkThumb = strDrinkThumb ?: "",
+        idDrink = idDrink ?: "",
+        isFavorite = isFavorite
+    )
+}
 
-    return this
+fun CocktailDetailsResponse.toCocktailsResponse(): CocktailResponse {
+    val cocktails = drinks?.map { it.toCocktail() }
+    return CocktailResponse(cocktails)
 }
 

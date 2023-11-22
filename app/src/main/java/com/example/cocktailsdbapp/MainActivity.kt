@@ -2,6 +2,7 @@ package com.example.cocktailsdbapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -17,7 +18,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
-    private var search: MenuItem? = null
+    private var searchIcon: MenuItem? = null
+    var searchInput: MenuItem? = null
     private var filter: MenuItem? = null
 
     var currentUser: String? = null
@@ -30,7 +32,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
-        search = menu?.findItem(R.id.action_search)
+        searchIcon = menu?.findItem(R.id.action_search)
+        searchInput = menu?.findItem(R.id.action_search_input)
         filter = menu?.findItem(R.id.action_filter)
         return true
     }
@@ -38,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_filter -> {
             // User chooses the "Filter" item. Open filter fragment.
-            navController.navigate(R.id.action_global_filter_fragment)
+            navController.navigate(R.id.action_global_category_fragment)
             true
         }
 
@@ -81,8 +84,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun showSearchView(show: Boolean) {
-        search?.isVisible = show
+    fun showSearchIconView(show: Boolean) {
+        searchIcon?.isVisible = show
+    }
+
+    fun showSearchInputView(show: Boolean) {
+        searchInput?.isVisible = show
     }
 
     fun showFilterView(show: Boolean) {

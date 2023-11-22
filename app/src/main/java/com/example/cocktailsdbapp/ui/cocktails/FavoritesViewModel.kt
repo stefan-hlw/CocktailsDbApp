@@ -29,8 +29,13 @@ class FavoritesViewModel @Inject constructor(private val cocktailsRepo: Cocktail
     }
 
     fun favoriteCocktail(userEmail: String, cocktail: Cocktail) {
-        CoroutineScope(Dispatchers.IO).launch {
-            cocktailsRepo.insertCocktail(userEmail, RoomCocktail(cocktail.strDrink, cocktail.strDrinkThumb, cocktail.idDrink))
+        viewModelScope.launch(Dispatchers.IO) {
+            val isFavorite = cocktailsRepo.findFavoriteCocktail(userEmail, cocktail.idDrink)
+            if(isFavorite != null) {
+                cocktailsRepo.removeFavorite(userEmail, cocktail.idDrink)
+            } else {
+                cocktailsRepo.insertCocktail(userEmail, RoomCocktail(cocktail.strDrink, cocktail.strDrinkThumb, cocktail.idDrink))
+            }
         }
     }
 

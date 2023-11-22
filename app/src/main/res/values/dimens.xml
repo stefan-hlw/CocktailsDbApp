@@ -16,6 +16,8 @@
 
     <dimen name="auth_image_vertical_margin">50dp</dimen>
 
+    <dimen name="rv_bottom_margin">16dp</dimen>
+
     <!-- Font size !-->
     <dimen name="auth_label_text_size">22sp</dimen>
 </resources>

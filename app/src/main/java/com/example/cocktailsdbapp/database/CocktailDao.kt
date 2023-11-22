@@ -19,4 +19,7 @@ interface CocktailDao {
 
     @Query("SELECT roomCocktail.strDrinkThumb, roomCocktail.strDrink, roomCocktail.idDrink FROM roomFavorite INNER JOIN roomCocktail ON roomFavorite.idDrink = roomCocktail.idDrink WHERE userEmail = :userEmail")
     suspend fun getFavoriteCocktails(userEmail: String) : List<RoomCocktail>?
+
+    @Query("SELECT roomCocktail.strDrinkThumb, roomCocktail.strDrink, roomCocktail.idDrink FROM roomFavorite INNER JOIN roomCocktail ON roomFavorite.idDrink = roomCocktail.idDrink WHERE userEmail = :userEmail AND roomCocktail.idDrink = :idDrink")
+    suspend fun findFavoriteCocktail(userEmail: String, idDrink: String) : RoomCocktail?
 }

@@ -1,5 +1,6 @@
 package com.example.cocktailsdbapp.ui.cocktails
 
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
@@ -9,6 +10,10 @@ import com.bumptech.glide.Glide
 import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.ItemCocktailBinding
 import com.example.cocktailsdbapp.model.Cocktail
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class CocktailAdapter(private val cocktailList: List<Cocktail>) : RecyclerView.Adapter<CocktailAdapter.CocktailViewHolder>() {
 
@@ -20,6 +25,8 @@ class CocktailAdapter(private val cocktailList: List<Cocktail>) : RecyclerView.A
     private var onItemClickListener: OnItemClickListener? = null
 
     private var onFavoriteClickListener: OnFavoriteClickListener? = null
+
+    private var isFavoriteClickable = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CocktailViewHolder {
         _binding = ItemCocktailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -39,27 +46,36 @@ class CocktailAdapter(private val cocktailList: List<Cocktail>) : RecyclerView.A
         fun bindView(cocktail: Cocktail) {
             with(binding) {
                 tvCocktailName.text = cocktail.strDrink
-                if (cocktail.isFavorite) {
-                    ivFavorite.isSelected = true
-                }
+                ivFavorite.isSelected = cocktail.isFavorite
 
                 cvItem.setOnClickListener {
                     onItemClickListener?.openCocktailDetails(cocktail.idDrink)
                 }
                 ivFavorite.setOnClickListener {
-                    ivFavorite.isSelected = !ivFavorite.isSelected
+                    if (isFavoriteClickable) {
+                        isFavoriteClickable = false
 
-                    // Load the animation
-                    val animationId = if (ivFavorite.isSelected) {
-                        R.anim.ic_favorite_animation // Selection animation
-                    } else {
-                        R.anim.ic_favorite_animation_deselect // Deselection animation
+                        ivFavorite.isSelected = !ivFavorite.isSelected
+
+                        // Load the animation
+                        val animationId = if (ivFavorite.isSelected) {
+                            R.anim.ic_favorite_animation // Selection animation
+                        } else {
+                            R.anim.ic_favorite_animation_deselect // Deselection animation
+                        }
+                        val animation = AnimationUtils.loadAnimation(root.context, animationId)
+
+                        // Apply the animation to the ImageView
+                        ivFavorite.startAnimation(animation)
+
+                        onFavoriteClickListener?.favoriteCocktail(cocktail)
+
+                        // Enable clickable after a delay (e.g., 1000 milliseconds)
+                        CoroutineScope(Dispatchers.Main).launch {
+                            delay(600)
+                            isFavoriteClickable = true
+                        }
                     }
-                    val animation = AnimationUtils.loadAnimation(root.context, animationId)
-
-                    // Apply the animation to the ImageView
-                    ivFavorite.startAnimation(animation)
-                    onFavoriteClickListener?.favoriteCocktail(cocktail)
                 }
                 Glide.with(root.context)
                     .load(cocktail.strDrinkThumb)

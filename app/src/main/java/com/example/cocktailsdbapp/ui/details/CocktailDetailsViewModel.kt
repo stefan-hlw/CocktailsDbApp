@@ -19,7 +19,7 @@ class CocktailDetailsViewModel @Inject constructor(private val cocktailsRepo: Co
             try {
                 val details = cocktailsRepo.getCocktailDetails(cocktailId)
                 // Cocktail details endpoint response consists of a List containing single item, so we always take only the first item
-                cocktailDetailsData.postValue(details.drinks.first())
+                cocktailDetailsData.postValue(details.drinks?.first())
             } catch (e: Exception) {
                 // Handle errors
             }

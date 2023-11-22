@@ -10,10 +10,27 @@ import com.example.cocktailsdbapp.model.FilterResponse
 import com.example.cocktailsdbapp.model.GlassesResponse
 import com.example.cocktailsdbapp.model.IngredientListResponse
 import com.example.cocktailsdbapp.network.CocktailApiService
+import com.example.cocktailsdbapp.utils.toCocktailsResponse
 
 class CocktailsRepoImpl(private val serviceApi: CocktailApiService, private val cocktailDao: CocktailDao): CocktailsRepo {
     override suspend fun getCocktailsByAlcoholContent(alcoholContent: String): CocktailResponse {
         return serviceApi.getCocktailsByAlcoholContent(alcoholContent)
+    }
+
+    override suspend fun getCocktailsByGlass(glass: String): CocktailResponse {
+        return serviceApi.getCocktailsByGlass(glass)
+    }
+
+    override suspend fun getCocktailsByCategory(category: String): CocktailResponse {
+        return serviceApi.getCocktailsByCategory(category)
+    }
+
+    override suspend fun getCocktailsByFirstLetter(letter: String): CocktailResponse {
+        return serviceApi.getCocktailsByFirstLetter(letter)
+    }
+
+    override suspend fun getCocktailsByIngredient(ingredient: String): CocktailResponse {
+        return serviceApi.getCocktailsByIngredient(ingredient)
     }
 
     override suspend fun getAlcoholContent(): AlcoholContentResponse {
@@ -36,13 +53,19 @@ class CocktailsRepoImpl(private val serviceApi: CocktailApiService, private val 
          return serviceApi.getCocktailDetails(cocktailId)
     }
 
-    override suspend fun getSearch(searchParam: String): CocktailDetailsResponse {
-        return serviceApi.getSearch(searchParam)
+    override suspend fun getSearch(searchParam: String): CocktailResponse {
+        val response = serviceApi.getSearch(searchParam)
+        return response.toCocktailsResponse()
     }
 
     override suspend fun getFavorites(userEmail: String): List<RoomCocktail>? {
         return cocktailDao.getFavoriteCocktails(userEmail)
     }
+
+    override suspend fun findFavoriteCocktail(userEmail: String, idDrink: String): RoomCocktail? {
+        return cocktailDao.findFavoriteCocktail(userEmail, idDrink)
+    }
+
     override suspend fun removeFavorite(userEmail: String, idDrink: String) {
         cocktailDao.removeFavorite(userEmail, idDrink)
     }

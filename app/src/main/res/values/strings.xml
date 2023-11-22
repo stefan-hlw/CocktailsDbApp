@@ -11,4 +11,20 @@
     <string name="button_login">Login</string>
 
     <string name="spacer_text">or</string>
+
+
+    <!-- We're adding trailing blank space due to the font we use being naturally curved,
+    and wrap content cutting off the last character in edge cases -->
+    <string name="search_param">Search: %1$s\u0020</string>
+    <string name="filter_param">%1$s\u0020</string>
+    <string name="search_screen_title">Search\u0020</string>
+    <string name="filter_screen_title">Filter\u0020</string>
+    <string name="category_screen_title">Category\u0020</string>
+    <string name="cocktails_screen_title">Cocktails\u0020</string>
+    <string name="cocktail_details_screen_title">CocktailDetails\u0020</string>
+    <string name="favorites_screen_title">Favorites\u0020</string>
+    <string name="profile_screen_title">Profile\u0020</string>
+
+    <string name="filter_param_default">Alcoholic</string>
+
 </resources>

@@ -4,18 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.cocktailsdbapp.MainActivity
+import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentSearchBinding
+import com.example.cocktailsdbapp.model.Cocktail
+import com.example.cocktailsdbapp.ui.cocktails.CocktailAdapter
+import com.example.cocktailsdbapp.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment: Fragment() {
+class SearchFragment: Fragment(), CocktailAdapter.OnFavoriteClickListener, CocktailAdapter.OnItemClickListener {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
     private val searchViewModel: SearchViewModel by viewModels()
 
+    private var cocktailAdapter: CocktailAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,11 +37,8 @@ class SearchFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupToolbar()
         setObservers()
-        (activity as MainActivity).let {
-            it.showSearchView(true)
-            it.showFilterView(false)
-        }
     }
 
     override fun onDestroyView() {
@@ -41,11 +47,77 @@ class SearchFragment: Fragment() {
     }
 
     private fun setObservers() {
-        cocktailsViewModel.cocktailsData.observe(viewLifecycleOwner) {
-            setCocktailsAdapter(it)
-            it?.let {
-                cocktailAdapter?.updateData(it)
+        searchViewModel.searchResultsData.observe(viewLifecycleOwner) { cocktails ->
+            if (cocktails.isNullOrEmpty()) {
+                // Show empty view
+                toggleEmptyViewVisibility(true)
+            } else {
+                // Show RecyclerView and update data
+                toggleEmptyViewVisibility(false)
+                setCocktailsAdapter(cocktails)
+                cocktailAdapter?.updateData(cocktails)
             }
+        }
+    }
+
+    private fun setCocktailsAdapter(cocktails: List<Cocktail>?) {
+        cocktailAdapter = cocktails?.let { CocktailAdapter(it) }
+        cocktailAdapter?.setOnItemClickListener(this)
+        cocktailAdapter?.setOnFavoriteClickListener(this)
+        binding.rvCocktails.adapter = cocktailAdapter
+        binding.llLabel.visibility = View.VISIBLE
+    }
+
+    private fun toggleEmptyViewVisibility(showEmptyView: Boolean) {
+        if (showEmptyView) {
+            binding.rvCocktails.visibility = View.GONE
+            binding.tvEmptyView.visibility = View.VISIBLE
+            binding.llLabel.visibility = View.GONE
+        } else {
+            binding.rvCocktails.visibility = View.VISIBLE
+            binding.tvEmptyView.visibility = View.GONE
+        }
+    }
+
+    private fun setupToolbar() {
+        (activity as MainActivity).let {
+            it.showSearchIconView(false)
+            it.showSearchInputView(true)
+            it.showFilterView(false)
+            val searchView = it.searchInput?.actionView as? SearchView
+            searchView?.onActionViewExpanded()
+            // Access the SearchView from the MainActivity
+            searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    // Handle query submission if needed
+                    searchViewModel.setSearchQuery(query.orEmpty())
+                    it.currentUser?.let { user -> searchViewModel.fetchSearchData(user) }
+                    binding.tvQueryParam.text = getString(R.string.search_param, query.orEmpty())
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    // Update the search query in the ViewModel or perform search directly
+                    searchViewModel.setSearchQuery(newText.orEmpty())
+                    it.currentUser?.let { user -> searchViewModel.fetchSearchData(user) }
+                    binding.tvQueryParam.text = getString(R.string.search_param, newText.orEmpty())
+                    return true
+                }
+            })
+        }
+    }
+
+    override fun openCocktailDetails(cocktailId: String) {
+        val args = bundleOf("cocktailId" to cocktailId)
+        findNavController().navigate(R.id.action_searchFragment_to_CocktailDetailsFragment, args)
+    }
+
+    override fun favoriteCocktail(cocktail: Cocktail) {
+        (activity as MainActivity).currentUser?.let {
+            searchViewModel.favoriteCocktail(
+                it,
+                cocktail
+            )
         }
     }
 

@@ -36,10 +36,11 @@ class FavoritesFragment: Fragment(), CocktailAdapter.OnFavoriteClickListener, Co
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObservers()
-        (activity as MainActivity).let {
-            it.currentUser?.let { favoritesViewModel.getFavorites(it) }
-            it.showSearchView(true)
-            it.showFilterView(true)
+        (activity as MainActivity).let { mainActivity ->
+            mainActivity.currentUser?.let { favoritesViewModel.getFavorites(it) }
+            mainActivity.showSearchIconView(true)
+            mainActivity.showSearchInputView(false)
+            mainActivity.showFilterView(true)
         }
     }
 

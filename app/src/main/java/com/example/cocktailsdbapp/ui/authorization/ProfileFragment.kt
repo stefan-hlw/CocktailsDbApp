@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.cocktailsdbapp.MainActivity
-import com.example.cocktailsdbapp.databinding.FragmentFavoritesBinding
 import com.example.cocktailsdbapp.databinding.FragmentProfileBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,7 +27,7 @@ class ProfileFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).let {
-            it.showSearchView(true)
+            it.showSearchIconView(true)
             it.showFilterView(true)
         }
     }

@@ -10,10 +10,21 @@
         android:id="@+id/tv_filter_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Filter Field "
+        android:text="Category Field"
         android:textSize="19sp"
         android:layout_marginStart="24dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iv_chevron"
+        />
+    <ImageView
+        android:id="@+id/iv_chevron"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:src="@drawable/ic_chevron"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         />

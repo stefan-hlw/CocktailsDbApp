@@ -8,6 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.cocktailsdbapp.MainActivity
 import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentCocktailsBinding
@@ -24,6 +25,8 @@ class CocktailsFragment: Fragment(), CocktailAdapter.OnFavoriteClickListener, Co
 
     private var cocktailAdapter: CocktailAdapter? = null
 
+    private val args: CocktailsFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,9 +39,11 @@ class CocktailsFragment: Fragment(), CocktailAdapter.OnFavoriteClickListener, Co
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObservers()
+        setFilterText()
         (activity as MainActivity).let { mainActivity ->
-            mainActivity.currentUser?.let { cocktailsViewModel.fetchData(it) }
-            mainActivity.showSearchView(true)
+            mainActivity.currentUser?.let { cocktailsViewModel.fetchData(it, args.filterCategory, args.filter) }
+            mainActivity.showSearchIconView(true)
+            mainActivity.showSearchInputView(false)
             mainActivity.showFilterView(true)
         }
 
@@ -58,14 +63,18 @@ class CocktailsFragment: Fragment(), CocktailAdapter.OnFavoriteClickListener, Co
         }
     }
 
+    private fun setFilterText() {
+        val filter = args.filter.ifEmpty {
+            getString(R.string.filter_param_default)
+        }
+        binding.tvFilterParam.text = getString(R.string.filter_param, filter)
+    }
+
     private fun setCocktailsAdapter(cocktails: List<Cocktail>?) {
         cocktailAdapter = cocktails?.let { CocktailAdapter(it) }
         cocktailAdapter?.setOnItemClickListener(this)
         cocktailAdapter?.setOnFavoriteClickListener(this)
         binding.rvCocktails.adapter = cocktailAdapter
-    }
-
-    private fun setListeners() {
     }
 
     override fun favoriteCocktail(cocktail: Cocktail) {

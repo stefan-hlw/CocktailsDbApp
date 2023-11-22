@@ -8,13 +8,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_cocktails"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"
+        android:id="@+id/rv_filter"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:spanCount="1"
+        tools:listitem="@layout/item_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/rv_bottom_margin"
-        tools:listitem="@layout/item_cocktail"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

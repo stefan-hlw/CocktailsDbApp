@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class CocktailDetailsResponse(
     @SerializedName("drinks")
-    val drinks: List<CocktailDetails>
+    val drinks: List<CocktailDetails>?
 )
 
 data class CocktailDetails(
@@ -60,4 +60,30 @@ data class CocktailDetails(
     @SerializedName("strCreativeCommonsConfirmed") val strCreativeCommonsConfirmed: String?,
     @SerializedName("dateModified") val dateModified: String?,
     @SerializedName("isFavorite") var isFavorite: Boolean = false
-)
+
+) {
+    fun getIngredientsWithMeasures(): List<Pair<String, String>> {
+        val ingredientsWithMeasures = mutableListOf<Pair<String, String>>()
+        val ingredients = listOf<String?>(
+            strIngredient1, strIngredient2, strIngredient3, strIngredient4, strIngredient5,
+            strIngredient6, strIngredient7, strIngredient8, strIngredient9, strIngredient10,
+            strIngredient11, strIngredient12, strIngredient13, strIngredient14, strIngredient15
+        )
+
+        val measures = listOf(
+            strMeasure1, strMeasure2, strMeasure3, strMeasure4, strMeasure5,
+            strMeasure6, strMeasure7, strMeasure8, strMeasure9, strMeasure10,
+            strMeasure11, strMeasure12, strMeasure13, strMeasure14, strMeasure15
+        )
+
+        for (i in ingredients.indices) {
+            val ingredient = ingredients.getOrNull(i)
+            val measure = measures.getOrNull(i)
+
+            if (!ingredient.isNullOrBlank() && !measure.isNullOrBlank()) {
+                ingredientsWithMeasures.add(Pair(ingredient, measure))
+            }
+        }
+        return ingredientsWithMeasures
+    }
+}

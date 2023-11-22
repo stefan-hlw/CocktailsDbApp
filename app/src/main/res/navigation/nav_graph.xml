@@ -17,7 +17,9 @@
             app:destination="@id/registrationFragment" />
         <action
             android:id="@+id/action_loginFragment_to_cocktailsFragment"
-            app:destination="@+id/navigation_cocktails" />
+            app:destination="@+id/navigation_cocktails"
+            app:popUpTo="@+id/navigation_cocktails"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -29,7 +31,9 @@
             app:destination="@id/loginFragment" />
         <action
             android:id="@+id/action_registrationFragment_to_cocktailsFragment"
-            app:destination="@+id/navigation_cocktails" />
+            app:destination="@+id/navigation_cocktails"
+            app:popUpTo="@+id/nav_graph"
+            app:popUpToInclusive="true"/>
     </fragment>
 
 </navigation>
