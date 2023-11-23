@@ -1,9 +1,13 @@
 package com.example.cocktailsdbapp.ui.search
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -14,7 +18,6 @@ import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentSearchBinding
 import com.example.cocktailsdbapp.model.Cocktail
 import com.example.cocktailsdbapp.ui.cocktails.CocktailAdapter
-import com.example.cocktailsdbapp.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -84,6 +87,7 @@ class SearchFragment: Fragment(), CocktailAdapter.OnFavoriteClickListener, Cockt
             it.showSearchIconView(false)
             it.showSearchInputView(true)
             it.showFilterView(false)
+            val mic = it.micOn?.actionView
             val searchView = it.searchInput?.actionView as? SearchView
             searchView?.onActionViewExpanded()
             // Access the SearchView from the MainActivity
@@ -118,6 +122,40 @@ class SearchFragment: Fragment(), CocktailAdapter.OnFavoriteClickListener, Cockt
                 it,
                 cocktail
             )
+        }
+    }
+
+    private val REQUEST_CODE_SPEECH_INPUT = 100
+
+    fun startVoiceInput() {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to search...")
+
+        try {
+            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT)
+        } catch (e: Exception) {
+            Toast.makeText(this.requireContext(), "Speech recognition not supported on your device", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            REQUEST_CODE_SPEECH_INPUT -> {
+                if (resultCode == Activity.RESULT_OK && data != null) {
+                    val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                    val spokenText = result?.get(0)
+
+                    // Do something with the spokenText, like setting it to an EditText
+                    val searchView = (activity as MainActivity).searchInput?.actionView as? SearchView
+                    searchView?.setQuery(spokenText, false)
+                    binding.tvQueryParam.text = getString(R.string.search_param, spokenText.orEmpty())
+                    searchViewModel.setSearchQuery(spokenText.orEmpty())
+                }
+            }
         }
     }
 

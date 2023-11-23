@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.example.cocktailsdbapp.ui.search.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,12 +20,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private var searchIcon: MenuItem? = null
     var searchInput: MenuItem? = null
+    var micOn: MenuItem? = null
     private var filter: MenuItem? = null
+
+    private lateinit var myFragment: SearchFragment
 
     var currentUser: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
         setupNavigation()
     }
@@ -33,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         searchIcon = menu?.findItem(R.id.action_search)
         searchInput = menu?.findItem(R.id.action_search_input)
+        micOn = menu?.findItem(R.id.action_mic)
         filter = menu?.findItem(R.id.action_filter)
         return true
     }
@@ -50,10 +54,19 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        R.id.action_mic -> {
+            val navHostFragment = supportFragmentManager.fragments.first()
+            val wantedFragment = navHostFragment.childFragmentManager.fragments.first()
+            if (wantedFragment is SearchFragment) {
+                wantedFragment.startVoiceInput()
+            }
+            true
+        }
+
         else -> {
             // The user's action isn't recognized.
             // Invoke the superclass to handle it.
-            super.onOptionsItemSelected(item)
+            false
         }
     }
 
@@ -89,6 +102,7 @@ class MainActivity : AppCompatActivity() {
 
     fun showSearchInputView(show: Boolean) {
         searchInput?.isVisible = show
+        micOn?.isVisible = show
     }
 
     fun showFilterView(show: Boolean) {
