@@ -40,8 +40,12 @@ class ProfileFragment: Fragment() {
             it.showSearchIconView(true)
             it.showFilterView(true)
         }
-
-        user = (activity as MainActivity).currentUser?.let { authViewModel.getUserData(it) }
+        (activity as MainActivity).let { mainActivity ->
+            mainActivity.currentUser?.let { authViewModel.getUserData(it) }
+            mainActivity.showSearchIconView(true)
+            mainActivity.showSearchInputView(false)
+            mainActivity.showFilterView(true)
+        }
         initUi()
         setListeners()
     }
