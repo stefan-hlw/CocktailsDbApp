@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/register_bg_gradient">
+
+    <TextView
+        android:id="@+id/tv_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/registar"
+        android:textSize="@dimen/auth_label_text_size"
+        android:layout_marginTop="@dimen/auth_label_margin_top"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@id/et_name_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_name_input"
+        android:layout_width="@dimen/input_field_width"
+        android:layout_height="@dimen/input_field_height"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:inputType="textPersonName"
+        android:hint="@string/hint_input_name"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_register"
+        tools:layout_editor_absoluteY="311dp" />
+
+    <EditText
+        android:id="@+id/et_email_input"
+        android:layout_width="@dimen/input_field_width"
+        android:layout_height="@dimen/input_field_height"
+        android:layout_marginTop="@dimen/input_field_marginTop"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:inputType="textEmailAddress"
+        android:hint="@string/hint_input_email"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_name_input"
+        tools:layout_editor_absoluteY="311dp" />
+
+    <EditText
+        android:id="@+id/et_password_input"
+        android:layout_width="@dimen/input_field_width"
+        android:layout_height="@dimen/input_field_height"
+        android:layout_marginTop="@dimen/input_field_marginTop"
+        android:inputType="textPassword"
+        android:hint="@string/hint_input_password"
+        android:gravity="center"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_email_input" />
+
+    <Button
+        android:id="@+id/bt_register"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/auth_button_height"
+        android:layout_marginTop="@dimen/login_button_margin_top"
+        android:backgroundTint="@color/white"
+        app:cornerRadius="0dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:drawableLeft="@drawable/ic_register"
+        android:text="@string/button_register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_password_input" />
+
+    <LinearLayout
+        android:id="@+id/ll_spacer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/spacer_horizontal_margin"
+        android:layout_marginEnd="@dimen/spacer_horizontal_margin"
+        android:layout_marginTop="@dimen/register_button_margin_top"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bt_register">
+        <View
+            android:id="@+id/v_spacer_left"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/spacer_horizontal_margin"
+            android:background="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/tv_or"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/spacer_text"
+            android:textColor="@color/white"
+            android:layout_marginHorizontal="@dimen/spacer_text_horizontal_margin" />
+
+        <View
+            android:id="@+id/v_spacer_right"
+            android:layout_marginStart="@dimen/spacer_horizontal_margin"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spacer_height"
+            android:layout_weight="1"
+            android:background="@color/white"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_login"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/auth_button_height"
+        android:layout_marginTop="@dimen/register_button_margin_top"
+        android:background="@drawable/button_auth_blur"
+        app:cornerRadius="0dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:text="@string/button_login"
+        android:drawableLeft="@drawable/ic_login_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_spacer" />
+
+    <ImageView
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cuba_libre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

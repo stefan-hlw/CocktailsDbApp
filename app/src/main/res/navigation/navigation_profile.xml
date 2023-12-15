@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_profile"
+    app:startDestination="@id/profileFragment">
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.cocktailsdbapp.ui.authorization.ProfileFragment"
+        android:label="@string/profile_screen_title" >
+        <action
+            android:id="@+id/action_profileFragment_to_CategoryFragment"
+            app:destination="@id/categoryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.example.cocktailsdbapp.ui.category.CategoryFragment"
+        android:label="@string/category_screen_title" >
+        <action
+            android:id="@+id/action_categoryFragment_to_FilterFragment"
+            app:destination="@id/filterFragment" />
+        <argument
+            android:name="filter"
+            app:argType="string"
+            android:defaultValue=""
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/filterFragment"
+        android:name="com.example.cocktailsdbapp.ui.category.FilterFragment"
+        android:label="@string/filter_screen_title" >
+        <action
+            android:id="@+id/action_filterFragment_to_CocktailsFragment"
+            app:destination="@id/cocktailsFragment" />
+        <argument
+            android:name="filter"
+            app:argType="string"
+            android:defaultValue=""
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.cocktailsdbapp.ui.search.SearchFragment"
+        android:label="@string/search_screen_title" >
+        <action
+            android:id="@+id/action_searchFragment_to_CocktailDetailsFragment"
+            app:destination="@id/cocktailDetailsFragment" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_global_search_fragment"
+        app:destination="@id/searchFragment" />
+
+    <action
+        android:id="@+id/action_profileFragment_to_initialState"
+        app:destination="@id/loginFragment"
+        app:popUpTo="@id/loginFragment"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_global_category_fragment"
+        app:destination="@id/categoryFragment" />
+
+    <fragment
+        android:id="@+id/cocktailsFragment"
+        android:name="com.example.cocktailsdbapp.ui.cocktails.CocktailsFragment"
+        android:label="@string/cocktails_screen_title" >
+        <action
+            android:id="@+id/action_cocktailsFragment_to_CategoryFragment"
+            app:destination="@id/categoryFragment" />
+        <action
+            android:id="@+id/action_cocktailsFragment_to_CocktailDetailsFragment"
+            app:destination="@id/cocktailDetailsFragment" />
+        <argument
+            android:name="filterCategory"
+            app:argType="string"
+            android:defaultValue=""
+            />
+        <argument
+            android:name="filter"
+            app:argType="string"
+            android:defaultValue=""
+            />
+    </fragment>
+
+</navigation>

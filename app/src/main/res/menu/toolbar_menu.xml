@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_search_input"
+        android:icon="@drawable/ic_search"
+        android:title="searchInput"
+        app:showAsAction="always"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:iconifiedByDefault="false"/>
+
+    <item android:id="@+id/action_mic"
+        android:icon="@drawable/baseline_mic_24"
+        android:title="micOn"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:title="search"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_filter"
+        android:icon="@drawable/ic_filter"
+        android:title="filter"
+        app:showAsAction="always"/>
+
+</menu>
