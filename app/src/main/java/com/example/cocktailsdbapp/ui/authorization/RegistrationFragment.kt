@@ -3,37 +3,23 @@ package com.example.cocktailsdbapp.ui.authorization
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.cocktailsdbapp.MainActivity
 import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentRegistrationBinding
 import com.example.cocktailsdbapp.model.User
+import com.example.cocktailsdbapp.ui.BaseFragment
 import com.example.cocktailsdbapp.utils.makeLastNCharactersBold
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegistrationFragment : Fragment() {
-
-    private var _binding: FragmentRegistrationBinding? = null
-    private val binding get() = _binding!!
+class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(FragmentRegistrationBinding::inflate) {
 
     private val authViewModel: AuthViewModel by viewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentRegistrationBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,11 +27,6 @@ class RegistrationFragment : Fragment() {
         registerListeners()
         binding.tvRegister.makeLastNCharactersBold(4)
         disableBackButton()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun registerListeners() {

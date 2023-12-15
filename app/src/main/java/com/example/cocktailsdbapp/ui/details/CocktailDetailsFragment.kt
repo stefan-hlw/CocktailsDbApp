@@ -1,39 +1,24 @@
 package com.example.cocktailsdbapp.ui.details
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.cocktailsdbapp.MainActivity
 import com.example.cocktailsdbapp.databinding.FragmentCocktailDetailsBinding
-import com.example.cocktailsdbapp.model.Cocktail
 import com.example.cocktailsdbapp.model.CocktailDetails
-import com.example.cocktailsdbapp.ui.cocktails.CocktailAdapter
+import com.example.cocktailsdbapp.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CocktailDetailsFragment: Fragment() {
-    private var _binding: FragmentCocktailDetailsBinding? = null
-    private val binding get() = _binding!!
+class CocktailDetailsFragment: BaseFragment<FragmentCocktailDetailsBinding>(FragmentCocktailDetailsBinding::inflate) {
 
     private val cocktailDetailsViewModel: CocktailDetailsViewModel by viewModels()
 
     private var ingredientsAdapter: IngredientsAdapter? = null
 
     private val args: CocktailDetailsFragmentArgs by navArgs()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentCocktailDetailsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,11 +30,6 @@ class CocktailDetailsFragment: Fragment() {
             it.showSearchInputView(false)
             it.showFilterView(false)
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun setObservers() {

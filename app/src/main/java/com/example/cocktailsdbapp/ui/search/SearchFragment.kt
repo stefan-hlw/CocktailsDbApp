@@ -4,49 +4,31 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.cocktailsdbapp.MainActivity
 import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentSearchBinding
 import com.example.cocktailsdbapp.model.Cocktail
+import com.example.cocktailsdbapp.ui.BaseFragment
 import com.example.cocktailsdbapp.ui.cocktails.CocktailAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchFragment: Fragment(), CocktailAdapter.OnFavoriteClickListener, CocktailAdapter.OnItemClickListener {
-    private var _binding: FragmentSearchBinding? = null
-    private val binding get() = _binding!!
+class SearchFragment: BaseFragment<FragmentSearchBinding>(FragmentSearchBinding::inflate), CocktailAdapter.OnFavoriteClickListener, CocktailAdapter.OnItemClickListener {
 
     private val searchViewModel: SearchViewModel by viewModels()
 
     private var cocktailAdapter: CocktailAdapter? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
         setObservers()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun setObservers() {
