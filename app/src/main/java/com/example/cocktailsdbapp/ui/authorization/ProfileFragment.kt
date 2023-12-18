@@ -6,7 +6,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.cocktailsdbapp.MainActivity
 import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentProfileBinding
 import com.example.cocktailsdbapp.model.User
@@ -22,24 +21,24 @@ class ProfileFragment: BaseFragment<FragmentProfileBinding>(FragmentProfileBindi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).let {
-            it.showSearchIconView(true)
-            it.showFilterView(true)
-        }
-        (activity as MainActivity).let { mainActivity ->
-            mainActivity.currentUser?.let { authViewModel.getUserData(it) }
-            mainActivity.showSearchIconView(true)
-            mainActivity.showSearchInputView(false)
-            mainActivity.showFilterView(true)
-        }
         initUi()
         setListeners()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        communicator.apply {
+            getCurrentLoggedInUser()?.let { authViewModel.getUserData(it) }
+            showSearchIconView(true)
+            showSearchInputView(false)
+            showFilterView(true)
+        }
     }
 
     private fun setListeners() {
         with(binding) {
             btLogout.setOnClickListener {
-                (activity as MainActivity).currentUser = null
+                communicator.setCurrentLoggedInUser(null)
                 findNavController().navigate(R.id.action_profileFragment_to_initialState)
             }
             tilNameInput.setEndIconOnClickListener {

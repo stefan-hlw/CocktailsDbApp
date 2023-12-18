@@ -2,12 +2,10 @@ package com.example.cocktailsdbapp.ui.cocktails
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.cocktailsdbapp.MainActivity
 import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentCocktailsBinding
 import com.example.cocktailsdbapp.model.Cocktail
@@ -27,14 +25,17 @@ class CocktailsFragment: BaseFragment<FragmentCocktailsBinding>(FragmentCocktail
         super.onViewCreated(view, savedInstanceState)
         setObservers()
         setFilterText()
-        (activity as MainActivity).let { mainActivity ->
-            mainActivity.currentUser?.let { cocktailsViewModel.fetchData(it, args.filterCategory, args.filter) }
-            mainActivity.showSearchIconView(true)
-            mainActivity.showSearchInputView(false)
-            mainActivity.showFilterView(true)
-        }
-        disableBackButton()
+        communicator.disableBackButton()
+    }
 
+    override fun onStart() {
+        super.onStart()
+        communicator.apply {
+            getCurrentLoggedInUser()?.let { cocktailsViewModel.fetchData(it, args.filterCategory, args.filter) }
+            showSearchIconView(true)
+            showSearchInputView(false)
+            showFilterView(true)
+        }
     }
 
     private fun setObservers() {
@@ -61,7 +62,7 @@ class CocktailsFragment: BaseFragment<FragmentCocktailsBinding>(FragmentCocktail
     }
 
     override fun favoriteCocktail(cocktail: Cocktail) {
-        (activity as MainActivity).currentUser?.let {
+        communicator.getCurrentLoggedInUser()?.let {
             cocktailsViewModel.favoriteCocktail(
                 it,
                 cocktail
@@ -72,17 +73,6 @@ class CocktailsFragment: BaseFragment<FragmentCocktailsBinding>(FragmentCocktail
     override fun openCocktailDetails(cocktailId: String) {
         val args = bundleOf("cocktailId" to cocktailId)
         findNavController().navigate(R.id.action_cocktailsFragment_to_CocktailDetailsFragment, args)
-    }
-
-    private fun disableBackButton() {
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    // this disables the Android native back button
-                }
-            }
-        )
     }
 
 }

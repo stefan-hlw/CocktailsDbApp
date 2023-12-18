@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.cocktailsdbapp.MainActivity
 import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentLoginBinding
 import com.example.cocktailsdbapp.ui.BaseFragment
@@ -24,7 +22,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         super.onViewCreated(view, savedInstanceState)
         registerListeners()
         binding.tvLogin.makeLastNCharactersBold(3)
-        disableBackButton()
+        communicator.disableBackButton()
     }
 
     private fun registerListeners() {
@@ -64,7 +62,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             if(email.length >= 3 && password.length >= 3 ) {
                 val success = authViewModel.isUserInfoValid(email, password)
                 if(success) {
-                    (activity as MainActivity).currentUser = binding.etEmailInput.text.toString()
+                    communicator.setCurrentLoggedInUser(binding.etEmailInput.text.toString())
                     showLoginPopUp()
                 }
             }
@@ -84,17 +82,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         }
         val dialog = dialogBuilder.create()
         dialog.show()
-    }
-
-    private fun disableBackButton() {
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    // this disables the Android native back button
-                }
-            }
-        )
     }
 
 }

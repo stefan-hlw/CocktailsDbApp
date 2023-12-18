@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.cocktailsdbapp.MainActivity
 import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentRegistrationBinding
 import com.example.cocktailsdbapp.model.User
@@ -26,7 +24,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(FragmentR
 
         registerListeners()
         binding.tvRegister.makeLastNCharactersBold(4)
-        disableBackButton()
+        communicator.disableBackButton()
     }
 
     private fun registerListeners() {
@@ -70,7 +68,7 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(FragmentR
             if(email.length >= 3 && password.length >=3) {
                 val success = authViewModel.saveUserData(User(name, email, password))
                 if(success) {
-                    (activity as MainActivity).currentUser = email
+                    communicator.setCurrentLoggedInUser(email)
                     showUserRegisteredPopUp()
                 }
             }
@@ -89,13 +87,4 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(FragmentR
         dialog.show()
     }
 
-    private fun disableBackButton() {
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                }
-            }
-        )
-    }
 }

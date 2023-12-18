@@ -6,7 +6,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.cocktailsdbapp.MainActivity
 import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentFilterBinding
 import com.example.cocktailsdbapp.ui.BaseFragment
@@ -24,11 +23,15 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>(FragmentFilterBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObservers()
+    }
+
+    override fun onStart() {
+        super.onStart()
         filterViewModel.fetchData(args.filter)
-        (activity as MainActivity).let {
-            it.showSearchIconView(false)
-            it.showSearchInputView(false)
-            it.showFilterView(false)
+        communicator.apply {
+            showSearchIconView(false)
+            showSearchInputView(false)
+            showFilterView(false)
         }
     }
 

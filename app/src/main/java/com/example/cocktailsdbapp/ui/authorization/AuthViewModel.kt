@@ -24,7 +24,7 @@ class AuthViewModel @Inject constructor(
         return true
     }
 
-    fun getUserData(userEmail: String): User? {
+    fun getUserData(userEmail: String): User {
             val name = sharedPreferences.getString("${userEmail}_name", "") ?: ""
             val email = sharedPreferences.getString("${userEmail}_email", "") ?: ""
             val password = sharedPreferences.getString("${userEmail}_password", "") ?: ""
@@ -34,10 +34,7 @@ class AuthViewModel @Inject constructor(
     fun isUserInfoValid(userEmail: String, password: String): Boolean {
         val email = sharedPreferences.getString("${userEmail}_name", "")
         val pass = sharedPreferences.getString("${userEmail}_password", "")
-        if(email.isNullOrEmpty() || pass.isNullOrEmpty()) {
-            return false
-        }
-        return true
+        return !(email.isNullOrEmpty() || pass != password)
     }
 
     fun editUserName(userEmail: String, newName: String) {
@@ -45,11 +42,11 @@ class AuthViewModel @Inject constructor(
         val currentUser = getUserData(userEmail)
 
         // Update the name
-        val updatedUser = currentUser?.copy(name = newName)
+        val updatedUser = currentUser.copy(name = newName)
 
         // Save the updated user data back to shared preferences
         with(sharedPreferences.edit()) {
-            putString("${userEmail}_name", updatedUser?.name)
+            putString("${userEmail}_name", updatedUser.name)
             apply()
         }
     }
@@ -58,11 +55,11 @@ class AuthViewModel @Inject constructor(
         val currentUser = getUserData(userEmail)
 
         // Update the name
-        val updatedUser = currentUser?.copy(password = newPassword)
+        val updatedUser = currentUser.copy(password = newPassword)
 
         // Save the updated user data back to shared preferences
         with(sharedPreferences.edit()) {
-            putString("${userEmail}_password", updatedUser?.password)
+            putString("${userEmail}_password", updatedUser.password)
             apply()
         }
     }

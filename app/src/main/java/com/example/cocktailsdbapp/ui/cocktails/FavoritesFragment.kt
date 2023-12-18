@@ -5,7 +5,6 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.cocktailsdbapp.MainActivity
 import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentFavoritesBinding
 import com.example.cocktailsdbapp.model.Cocktail
@@ -22,11 +21,15 @@ class FavoritesFragment: BaseFragment<FragmentFavoritesBinding>(FragmentFavorite
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObservers()
-        (activity as MainActivity).let { mainActivity ->
-            mainActivity.currentUser?.let { favoritesViewModel.getFavorites(it) }
-            mainActivity.showSearchIconView(true)
-            mainActivity.showSearchInputView(false)
-            mainActivity.showFilterView(true)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        communicator.apply {
+            getCurrentLoggedInUser()?.let { favoritesViewModel.getFavorites(it) }
+            showSearchIconView(true)
+            showSearchInputView(false)
+            showFilterView(true)
         }
     }
 
@@ -47,7 +50,7 @@ class FavoritesFragment: BaseFragment<FragmentFavoritesBinding>(FragmentFavorite
     }
 
     override fun favoriteCocktail(cocktail: Cocktail) {
-        (activity as MainActivity).currentUser?.let {
+        communicator.getCurrentLoggedInUser()?.let {
             favoritesViewModel.favoriteCocktail(
                 it,
                 cocktail

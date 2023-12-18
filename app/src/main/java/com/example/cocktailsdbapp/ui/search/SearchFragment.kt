@@ -10,7 +10,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.cocktailsdbapp.MainActivity
 import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentSearchBinding
 import com.example.cocktailsdbapp.model.Cocktail
@@ -27,8 +26,12 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(FragmentSearchBinding:
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupToolbar()
         setObservers()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        setupToolbar()
     }
 
     private fun setObservers() {
@@ -65,32 +68,33 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(FragmentSearchBinding:
     }
 
     private fun setupToolbar() {
-        (activity as MainActivity).let {
-            it.showSearchIconView(false)
-            it.showSearchInputView(true)
-            it.showFilterView(false)
-            val mic = it.micOn?.actionView
-            val searchView = it.searchInput?.actionView as? SearchView
+        communicator.apply {
+            showSearchIconView(false)
+            showSearchInputView(true)
+            showFilterView(false)
+            val searchView = getSearchInputViewReference()
             searchView?.onActionViewExpanded()
             // Access the SearchView from the MainActivity
             searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     // Handle query submission if needed
-                    searchViewModel.setSearchQuery(query.orEmpty())
-                    it.currentUser?.let { user -> searchViewModel.fetchSearchData(user) }
-                    binding.tvQueryParam.text = getString(R.string.search_param, query.orEmpty())
+                    handleQueryChange(query)
                     return true
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
                     // Update the search query in the ViewModel or perform search directly
-                    searchViewModel.setSearchQuery(newText.orEmpty())
-                    it.currentUser?.let { user -> searchViewModel.fetchSearchData(user) }
-                    binding.tvQueryParam.text = getString(R.string.search_param, newText.orEmpty())
+                    handleQueryChange(newText)
                     return true
                 }
             })
         }
+    }
+
+    private fun handleQueryChange(newText: String?) {
+        searchViewModel.setSearchQuery(newText.orEmpty())
+        communicator.getCurrentLoggedInUser()?.let { searchViewModel.fetchSearchData(it) }
+        binding.tvQueryParam.text = getString(R.string.search_param, newText.orEmpty())
     }
 
     override fun openCocktailDetails(cocktailId: String) {
@@ -99,7 +103,7 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(FragmentSearchBinding:
     }
 
     override fun favoriteCocktail(cocktail: Cocktail) {
-        (activity as MainActivity).currentUser?.let {
+        communicator.getCurrentLoggedInUser()?.let {
             searchViewModel.favoriteCocktail(
                 it,
                 cocktail
@@ -107,7 +111,7 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(FragmentSearchBinding:
         }
     }
 
-    private val REQUEST_CODE_SPEECH_INPUT = 100
+    private val requestCodeSpeechInput = 100
 
     fun startVoiceInput() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
@@ -115,7 +119,7 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(FragmentSearchBinding:
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to search...")
 
         try {
-            startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT)
+            startActivityForResult(intent, requestCodeSpeechInput)
         } catch (e: Exception) {
             Toast.makeText(this.requireContext(), "Speech recognition not supported on your device", Toast.LENGTH_SHORT).show()
         }
@@ -126,14 +130,12 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(FragmentSearchBinding:
         super.onActivityResult(requestCode, resultCode, data)
 
         when (requestCode) {
-            REQUEST_CODE_SPEECH_INPUT -> {
+            requestCodeSpeechInput -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
-                    val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                    val spokenText = result?.get(0)
+                    val spokenText = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.get(0)
 
                     // Do something with the spokenText, like setting it to an EditText
-                    val searchView = (activity as MainActivity).searchInput?.actionView as? SearchView
-                    searchView?.setQuery(spokenText, false)
+                    communicator.getSearchInputViewReference()?.setQuery(spokenText, false)
                     binding.tvQueryParam.text = getString(R.string.search_param, spokenText.orEmpty())
                     searchViewModel.setSearchQuery(spokenText.orEmpty())
                 }

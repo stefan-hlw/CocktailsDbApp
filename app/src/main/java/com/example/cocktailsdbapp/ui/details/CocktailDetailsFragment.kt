@@ -5,7 +5,6 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.example.cocktailsdbapp.MainActivity
 import com.example.cocktailsdbapp.databinding.FragmentCocktailDetailsBinding
 import com.example.cocktailsdbapp.model.CocktailDetails
 import com.example.cocktailsdbapp.ui.BaseFragment
@@ -25,10 +24,14 @@ class CocktailDetailsFragment: BaseFragment<FragmentCocktailDetailsBinding>(Frag
         binding.tvName.text = args.cocktailId
         setObservers()
         cocktailDetailsViewModel.getDetails(args.cocktailId)
-        (activity as MainActivity).let {
-            it.showSearchIconView(false)
-            it.showSearchInputView(false)
-            it.showFilterView(false)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        communicator.apply {
+            showSearchIconView(false)
+            showSearchInputView(false)
+            showFilterView(false)
         }
     }
 
@@ -42,8 +45,6 @@ class CocktailDetailsFragment: BaseFragment<FragmentCocktailDetailsBinding>(Frag
         with(binding) {
             Glide.with(root.context)
                 .load(cocktail.strDrinkThumb)
-//                    .placeholder(R.drawable.placeholder_image)
-//                    .error(R.drawable.placeholder_image)
                 .into(ivDrink)
             tvName.text = cocktail.strDrink
             tvCategory.text = cocktail.strCategory

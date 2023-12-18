@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -15,17 +17,15 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Communicator {
 
     private lateinit var navController: NavController
     private var searchIcon: MenuItem? = null
-    var searchInput: MenuItem? = null
-    var micOn: MenuItem? = null
+    private var searchInput: MenuItem? = null
+    private var micOn: MenuItem? = null
     private var filter: MenuItem? = null
 
-    private lateinit var myFragment: SearchFragment
-
-    var currentUser: String? = null
+    private var currentUser: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -96,21 +96,45 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun showSearchIconView(show: Boolean) {
+    override fun showSearchIconView(show: Boolean) {
         searchIcon?.isVisible = show
     }
 
-    fun showSearchInputView(show: Boolean) {
+    override fun showSearchInputView(show: Boolean) {
         searchInput?.isVisible = show
         micOn?.isVisible = show
     }
 
-    fun showFilterView(show: Boolean) {
+    override fun showFilterView(show: Boolean) {
         filter?.isVisible = show
+    }
+
+    override fun getCurrentLoggedInUser(): String? {
+        return currentUser
+    }
+
+    override fun setCurrentLoggedInUser(email: String?) {
+        currentUser = email
     }
 
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+
+    override fun disableBackButton() {
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // this disables the Android native back button
+                }
+            }
+        )
+    }
+
+    override fun getSearchInputViewReference(): SearchView? {
+        return searchInput?.actionView as? SearchView
     }
 }
