@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentLoginBinding
 import com.example.cocktailsdbapp.ui.BaseFragment
+import com.example.cocktailsdbapp.utils.Constants
 import com.example.cocktailsdbapp.utils.makeLastNCharactersBold
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +22,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         registerListeners()
-        binding.tvLogin.makeLastNCharactersBold(3)
+        binding.tvLogin.makeLastNCharactersBold(Constants.LOGIN_BOLD_LETTER_AMOUNT)
         communicator.disableBackButton()
     }
 
@@ -30,11 +31,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 // Check if the input is valid (e.g., more than 3 characters)
-                val isInputValid = (s?.length ?: 0) >= 3
+                val isInputValid = (s?.length ?: 0) >= Constants.VALIDATION_MINIMUM_CHARACTERS
 
                 // Show/hide error message based on input validity
                 if (!isInputValid) {
-                    binding.etEmailInput.error = "Input must be at least 3 characters"
+                    binding.etEmailInput.error = getString(R.string.input_validation_error)
                 } else {
                     binding.etEmailInput.error = null // Clear error if input is valid
                 }
@@ -45,11 +46,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 // Check if the input is valid (e.g., more than 3 characters)
-                val isInputValid = (s?.length ?: 0) >= 3
+                val isInputValid = (s?.length ?: 0) >= Constants.VALIDATION_MINIMUM_CHARACTERS
 
                 // Show/hide error message based on input validity
                 if (!isInputValid) {
-                    binding.etPasswordInput.error = "Input must be at least 3 characters"
+                    binding.etPasswordInput.error = getString(R.string.input_validation_error)
                 } else {
                     binding.etPasswordInput.error = null // Clear error if input is valid
                 }
@@ -59,7 +60,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         binding.btLogin.setOnClickListener {
             val email = binding.etEmailInput.text.toString()
             val password = binding.etPasswordInput.text.toString()
-            if(email.length >= 3 && password.length >= 3 ) {
+            if(email.length >= Constants.VALIDATION_MINIMUM_CHARACTERS && password.length >= Constants.VALIDATION_MINIMUM_CHARACTERS ) {
                 val success = authViewModel.isUserInfoValid(email, password)
                 if(success) {
                     communicator.setCurrentLoggedInUser(binding.etEmailInput.text.toString())
@@ -75,8 +76,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
     private fun showLoginPopUp() {
         val dialogBuilder = AlertDialog.Builder(this.requireContext())
-        dialogBuilder.setMessage("Login Successful!")
-        dialogBuilder.setPositiveButton("Ok"
+        dialogBuilder.setMessage(getString(R.string.login_success_message))
+        dialogBuilder.setPositiveButton(R.string.ok
         ) { _, _ ->
             findNavController().navigate(R.id.action_loginFragment_to_cocktailsFragment)
         }

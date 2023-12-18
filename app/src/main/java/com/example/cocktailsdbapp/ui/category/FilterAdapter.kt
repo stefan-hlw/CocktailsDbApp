@@ -21,10 +21,6 @@ class FilterAdapter(private val filterList: List<String>) : RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: FilterViewHolder, position: Int) {
-//        val currentCocktail = cocktailList[position]
-//        val animation: Animation =
-//            AnimationUtils.loadAnimation(binding.root.context, R.anim.animation_resources)
-//        holder.itemView.startAnimation(animation)
         holder.bindView(filterList[position])
     }
 

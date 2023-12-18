@@ -73,9 +73,8 @@ import javax.inject.Inject
     }
 
     private fun getFirstLetters() {
-        val alphabetLettersList: List<String> = ('A'..'Z').map { it.toString() }
+        val alphabetLettersList: List<String> = (Constants.ALPHABET_FIRST_LETTER..Constants.ALPHABET_LAST_LETTER).map { it.toString() }
         filterData.postValue(alphabetLettersList)
     }
-
 
 }

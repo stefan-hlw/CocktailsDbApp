@@ -44,7 +44,7 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(FragmentCategoryB
     }
 
     override fun openFilter(filter: String) {
-        val args = bundleOf("filter" to filter)
+        val args = bundleOf(getString(R.string.argument_filter) to filter)
         findNavController().navigate(R.id.action_categoryFragment_to_FilterFragment, args)
     }
 }

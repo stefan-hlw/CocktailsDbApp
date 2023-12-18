@@ -71,8 +71,8 @@ class ProfileFragment: BaseFragment<FragmentProfileBinding>(FragmentProfileBindi
 
     private fun showEditSuccessPopUp() {
         val dialogBuilder = AlertDialog.Builder(this.requireContext())
-        dialogBuilder.setMessage("Edit Successful!")
-        dialogBuilder.setPositiveButton("OK") { dialog, _ ->
+        dialogBuilder.setMessage(getString(R.string.edit_success_message))
+        dialogBuilder.setPositiveButton(getString(R.string.ok)) { dialog, _ ->
             dialog.dismiss()
         }
         val dialog = dialogBuilder.create()

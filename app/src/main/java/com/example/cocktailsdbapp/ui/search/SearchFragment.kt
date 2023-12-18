@@ -98,7 +98,7 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(FragmentSearchBinding:
     }
 
     override fun openCocktailDetails(cocktailId: String) {
-        val args = bundleOf("cocktailId" to cocktailId)
+        val args = bundleOf(getString(R.string.argument_cocktail_id) to cocktailId)
         findNavController().navigate(R.id.action_searchFragment_to_CocktailDetailsFragment, args)
     }
 
@@ -116,12 +116,12 @@ class SearchFragment: BaseFragment<FragmentSearchBinding>(FragmentSearchBinding:
     fun startVoiceInput() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak to search...")
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.search_speak_to_search))
 
         try {
             startActivityForResult(intent, requestCodeSpeechInput)
         } catch (e: Exception) {
-            Toast.makeText(this.requireContext(), "Speech recognition not supported on your device", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this.requireContext(), getString(R.string.search_speech_to_text_not_supported), Toast.LENGTH_SHORT).show()
         }
     }
 

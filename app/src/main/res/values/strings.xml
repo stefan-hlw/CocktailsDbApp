@@ -9,8 +9,24 @@
 
     <string name="button_register">Register</string>
     <string name="button_login">Login</string>
+    <string name="input_validation_error">Input must be at least 3 characters</string>
+    <string name="login_success_message">Login Successful!</string>
+    <string name="edit_success_message">Edit Successful!</string>
+    <string name="registration_success_message">Registration Successful!</string>
+    <string name="ok">Ok</string>
+
+    <string name="shared_preferences_name">%1$s_name</string>
+    <string name="shared_preferences_email">%1$s_email</string>
+    <string name="shared_preferences_password">%1$s_password</string>
 
     <string name="spacer_text">or</string>
+
+    <string name="argument_filter">filter</string>
+    <string name="argument_filter_category">filterCategory</string>
+    <string name="argument_cocktail_id">cocktailId</string>
+
+    <string name="search_speak_to_search">Speak to search…</string>
+    <string name="search_speech_to_text_not_supported">Speech recognition not supported on your device</string>
 
 
     <!-- We're adding trailing blank space due to the font we use being naturally curved,

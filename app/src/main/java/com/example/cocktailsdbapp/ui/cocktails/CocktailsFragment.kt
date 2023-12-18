@@ -71,7 +71,7 @@ class CocktailsFragment: BaseFragment<FragmentCocktailsBinding>(FragmentCocktail
     }
 
     override fun openCocktailDetails(cocktailId: String) {
-        val args = bundleOf("cocktailId" to cocktailId)
+        val args = bundleOf(getString(R.string.argument_cocktail_id) to cocktailId)
         findNavController().navigate(R.id.action_cocktailsFragment_to_CocktailDetailsFragment, args)
     }
 
