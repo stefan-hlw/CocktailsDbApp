@@ -13,7 +13,7 @@
     <string name="login_success_message">Login Successful!</string>
     <string name="edit_success_message">Edit Successful!</string>
     <string name="registration_success_message">Registration Successful!</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
 
     <string name="shared_preferences_name">%1$s_name</string>
     <string name="shared_preferences_email">%1$s_email</string>

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.cocktailsdbapp.R
@@ -70,22 +69,14 @@ class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>(FragmentR
                 val success = authViewModel.saveUserData(User(name, email, password))
                 if(success) {
                     communicator.setCurrentLoggedInUser(email)
-                    showUserRegisteredPopUp()
+                    showSuccessPopUp(
+                        getString(R.string.registration_success_message),
+                        R.id.action_registrationFragment_to_cocktailsFragment
+                    )
                 }
             }
         }
 
-    }
-
-    private fun showUserRegisteredPopUp() {
-        val dialogBuilder = AlertDialog.Builder(this.requireContext())
-        dialogBuilder.setMessage(getString(R.string.registration_success_message))
-        dialogBuilder.setPositiveButton(R.string.ok) { dialog, _ ->
-            dialog.dismiss()
-            findNavController().navigate(R.id.action_registrationFragment_to_cocktailsFragment)
-        }
-        val dialog = dialogBuilder.create()
-        dialog.show()
     }
 
 }

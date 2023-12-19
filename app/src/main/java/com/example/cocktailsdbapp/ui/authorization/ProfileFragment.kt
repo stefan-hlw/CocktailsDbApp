@@ -2,7 +2,6 @@ package com.example.cocktailsdbapp.ui.authorization
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -46,7 +45,10 @@ class ProfileFragment: BaseFragment<FragmentProfileBinding>(FragmentProfileBindi
                     this.etNameInput.isEnabled = false
                     user?.email?.let { email -> authViewModel.editUserName(email, etNameInput.text.toString()) }
                     this.tilNameInput.endIconDrawable = ResourcesCompat.getDrawable(resources, R.drawable.baseline_edit_24, null)
-                    showEditSuccessPopUp()
+                    showSuccessPopUp(
+                        getString(R.string.edit_success_message),
+                        null
+                    )
                 } else {
                     this.etNameInput.isEnabled = true
                     this.etNameInput.requestFocus()
@@ -59,7 +61,10 @@ class ProfileFragment: BaseFragment<FragmentProfileBinding>(FragmentProfileBindi
                     this.etPasswordInput.isEnabled = false
                     user?.email?.let { email -> authViewModel.editPassword(email, etPasswordInput.text.toString()) }
                     this.tilPasswordInput.endIconDrawable = ResourcesCompat.getDrawable(resources, R.drawable.baseline_edit_24, null)
-                    showEditSuccessPopUp()
+                    showSuccessPopUp(
+                        getString(R.string.edit_success_message),
+                        null
+                    )
                 } else {
                     this.etPasswordInput.isEnabled = true
                     this.etPasswordInput.requestFocus()
@@ -68,17 +73,6 @@ class ProfileFragment: BaseFragment<FragmentProfileBinding>(FragmentProfileBindi
             }
         }
     }
-
-    private fun showEditSuccessPopUp() {
-        val dialogBuilder = AlertDialog.Builder(this.requireContext())
-        dialogBuilder.setMessage(getString(R.string.edit_success_message))
-        dialogBuilder.setPositiveButton(getString(R.string.ok)) { dialog, _ ->
-            dialog.dismiss()
-        }
-        val dialog = dialogBuilder.create()
-        dialog.show()
-    }
-
 
     private fun initUi() {
         with(binding) {

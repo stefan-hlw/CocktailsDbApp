@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.cocktailsdbapp.R
@@ -64,7 +63,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                 val success = authViewModel.isUserInfoValid(email, password)
                 if(success) {
                     communicator.setCurrentLoggedInUser(binding.etEmailInput.text.toString())
-                    showLoginPopUp()
+                    showSuccessPopUp(
+                        getString(R.string.login_success_message),
+                            R.id.action_loginFragment_to_cocktailsFragment
+                        )
                 }
             }
         }
@@ -73,16 +75,4 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
         }
     }
-
-    private fun showLoginPopUp() {
-        val dialogBuilder = AlertDialog.Builder(this.requireContext())
-        dialogBuilder.setMessage(getString(R.string.login_success_message))
-        dialogBuilder.setPositiveButton(R.string.ok
-        ) { _, _ ->
-            findNavController().navigate(R.id.action_loginFragment_to_cocktailsFragment)
-        }
-        val dialog = dialogBuilder.create()
-        dialog.show()
-    }
-
 }
