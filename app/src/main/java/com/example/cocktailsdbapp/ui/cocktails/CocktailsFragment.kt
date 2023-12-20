@@ -57,10 +57,11 @@ class CocktailsFragment: BaseFragment<FragmentCocktailsBinding>(FragmentCocktail
     }
 
     private fun setCocktailsAdapter(cocktails: List<Cocktail>?) {
-        cocktailAdapter = cocktails?.let { CocktailAdapter(it) }
-        cocktailAdapter?.setOnItemClickListener(this)
-        cocktailAdapter?.setOnFavoriteClickListener(this)
-        binding.rvCocktails.adapter = cocktailAdapter
+        cocktailAdapter = CocktailAdapter(this, this)
+        cocktailAdapter?.let { adapter ->
+            cocktails?.let { items -> adapter.updateData(items) }
+            binding.rvCocktails.adapter = adapter
+        }
     }
 
     override fun favoriteCocktail(cocktail: Cocktail) {

@@ -38,9 +38,11 @@ class CategoryFragment : BaseFragment<FragmentCategoryBinding>(FragmentCategoryB
     }
 
     private fun setFilterAdapter(filters: List<String>?) {
-        filterAdapter = filters?.let { FilterAdapter(it) }
-        filterAdapter?.setOnItemClickListener(this)
-        binding.rvFilter.adapter = filterAdapter
+        filterAdapter = FilterAdapter(this)
+        filterAdapter?.let { adapter ->
+            filters?.let { items -> adapter.updateData(items) }
+            binding.rvFilter.adapter = adapter
+        }
     }
 
     override fun openFilter(filter: String) {
