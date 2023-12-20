@@ -12,7 +12,7 @@ import com.example.cocktailsdbapp.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProfileFragment: BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
+class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
 
     private val authViewModel: AuthViewModel by viewModels()
 
@@ -41,10 +41,16 @@ class ProfileFragment: BaseFragment<FragmentProfileBinding>(FragmentProfileBindi
                 findNavController().navigate(R.id.action_profileFragment_to_initialState)
             }
             tilNameInput.setEndIconOnClickListener {
-                if(this.etNameInput.isEnabled) {
+                if (this.etNameInput.isEnabled) {
                     this.etNameInput.isEnabled = false
-                    user?.email?.let { email -> authViewModel.editUserName(email, etNameInput.text.toString()) }
-                    this.tilNameInput.endIconDrawable = ResourcesCompat.getDrawable(resources, R.drawable.baseline_edit_24, null)
+                    user?.email?.let { email ->
+                        authViewModel.editUserName(
+                            email,
+                            etNameInput.text.toString()
+                        )
+                    }
+                    this.tilNameInput.endIconDrawable =
+                        ResourcesCompat.getDrawable(resources, R.drawable.baseline_edit_24, null)
                     showSuccessPopUp(
                         getString(R.string.edit_success_message),
                         null
@@ -52,15 +58,22 @@ class ProfileFragment: BaseFragment<FragmentProfileBinding>(FragmentProfileBindi
                 } else {
                     this.etNameInput.isEnabled = true
                     this.etNameInput.requestFocus()
-                    this.tilNameInput.endIconDrawable = ResourcesCompat.getDrawable(resources, R.drawable.baseline_save_24, null)
+                    this.tilNameInput.endIconDrawable =
+                        ResourcesCompat.getDrawable(resources, R.drawable.baseline_save_24, null)
                 }
             }
 
             tilPasswordInput.setEndIconOnClickListener {
-                if(this.etPasswordInput.isEnabled) {
+                if (this.etPasswordInput.isEnabled) {
                     this.etPasswordInput.isEnabled = false
-                    user?.email?.let { email -> authViewModel.editPassword(email, etPasswordInput.text.toString()) }
-                    this.tilPasswordInput.endIconDrawable = ResourcesCompat.getDrawable(resources, R.drawable.baseline_edit_24, null)
+                    user?.email?.let { email ->
+                        authViewModel.editPassword(
+                            email,
+                            etPasswordInput.text.toString()
+                        )
+                    }
+                    this.tilPasswordInput.endIconDrawable =
+                        ResourcesCompat.getDrawable(resources, R.drawable.baseline_edit_24, null)
                     showSuccessPopUp(
                         getString(R.string.edit_success_message),
                         null
@@ -68,19 +81,16 @@ class ProfileFragment: BaseFragment<FragmentProfileBinding>(FragmentProfileBindi
                 } else {
                     this.etPasswordInput.isEnabled = true
                     this.etPasswordInput.requestFocus()
-                    this.tilPasswordInput.endIconDrawable = ResourcesCompat.getDrawable(resources, R.drawable.baseline_save_24, null)
+                    this.tilPasswordInput.endIconDrawable =
+                        ResourcesCompat.getDrawable(resources, R.drawable.baseline_save_24, null)
                 }
             }
         }
     }
 
     private fun initUi() {
-        with(binding) {
-            etNameInput.setText(user?.name)
-        }
-        with(binding) {
-            etPasswordInput.setText(user?.password)
-        }
+        binding.etNameInput.setText(user?.name)
+        binding.etPasswordInput.setText(user?.password)
     }
 
 }

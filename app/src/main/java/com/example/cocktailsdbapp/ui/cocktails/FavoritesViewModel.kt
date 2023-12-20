@@ -8,7 +8,6 @@ import com.example.cocktailsdbapp.model.Cocktail
 import com.example.cocktailsdbapp.repository.CocktailsRepo
 import com.example.cocktailsdbapp.utils.toCocktail
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject

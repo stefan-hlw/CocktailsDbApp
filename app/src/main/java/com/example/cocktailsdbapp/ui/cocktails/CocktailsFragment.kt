@@ -48,10 +48,12 @@ class CocktailsFragment: BaseFragment<FragmentCocktailsBinding>(FragmentCocktail
     }
 
     private fun setFilterText() {
-        val filter = args.filter.ifEmpty {
-            getString(R.string.filter_param_default)
-        }
-        binding.tvFilterParam.text = getString(R.string.filter_param, filter)
+        binding.tvFilterParam.text = getString(
+            R.string.filter_param,
+            args.filter.ifEmpty {
+                getString(R.string.filter_param_default)
+            }
+        )
     }
 
     private fun setCocktailsAdapter(cocktails: List<Cocktail>?) {

@@ -31,8 +31,11 @@ import javax.inject.Inject
     private fun getAlcoholContent() {
         viewModelScope.launch {
             try {
-                val response = cocktailsRepo.getAlcoholContent()
-                filterData.postValue(response.drinks.map { it.strAlcoholic })
+                filterData.postValue(
+                    cocktailsRepo.getAlcoholContent().drinks.map {
+                        it.strAlcoholic
+                    }
+                )
             } catch (e: Exception) {
                 // Handle errors
             }
@@ -42,8 +45,9 @@ import javax.inject.Inject
     private fun getCategories() {
         viewModelScope.launch {
             try {
-                val response = cocktailsRepo.getCategories()
-                filterData.postValue(response.drinks.map { it.strCategory })
+                filterData.postValue(cocktailsRepo.getCategories().drinks.map {
+                    it.strCategory
+                })
             } catch (e: Exception) {
                 // Handle errors
             }
@@ -53,8 +57,9 @@ import javax.inject.Inject
     private fun getGlasses() {
         viewModelScope.launch {
             try {
-                val response = cocktailsRepo.getGlasses()
-                filterData.postValue(response.drinks.map { it.strGlass })
+                filterData.postValue(cocktailsRepo.getGlasses().drinks.map {
+                    it.strGlass
+                })
             } catch (e: Exception) {
                 // Handle errors
             }
@@ -64,8 +69,9 @@ import javax.inject.Inject
     private fun getIngredients() {
         viewModelScope.launch {
             try {
-                val response = cocktailsRepo.getIngredients()
-                filterData.postValue(response.drinks.map { it.strIngredient })
+                filterData.postValue(cocktailsRepo.getIngredients().drinks.map {
+                    it.strIngredient
+                })
             } catch (e: Exception) {
                 // Handle errors
             }

@@ -34,17 +34,13 @@ class AuthViewModel @Inject constructor(
         }
 
     fun isUserInfoValid(userEmail: String, password: String): Boolean {
-        val email = sharedPreferences.getString("${userEmail}${Constants.SHARED_PREF_EMAIL}", "")
-        val pass = sharedPreferences.getString("${userEmail}${Constants.SHARED_PREF_PASSWORD}", "")
-        return !(email.isNullOrEmpty() || pass != password)
+        return !(sharedPreferences.getString("${userEmail}${Constants.SHARED_PREF_EMAIL}", "").isNullOrEmpty() ||
+                sharedPreferences.getString("${userEmail}${Constants.SHARED_PREF_PASSWORD}", "") != password)
     }
 
     fun editUserName(userEmail: String, newName: String) {
-        // Get the current user data
-        val currentUser = getUserData(userEmail)
-
-        // Update the name
-        val updatedUser = currentUser.copy(name = newName)
+        // Copy the current user using updated name
+        val updatedUser = getUserData(userEmail).copy(name = newName)
 
         // Save the updated user data back to shared preferences
         with(sharedPreferences.edit()) {

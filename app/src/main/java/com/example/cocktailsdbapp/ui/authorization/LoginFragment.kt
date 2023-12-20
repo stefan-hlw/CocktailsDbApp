@@ -27,46 +27,42 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
     private fun registerListeners() {
         binding.etEmailInput.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun beforeTextChanged(input: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(input: CharSequence?, start: Int, before: Int, count: Int) {
                 // Check if the input is valid (e.g., more than 3 characters)
-                val isInputValid = (s?.length ?: 0) >= Constants.VALIDATION_MINIMUM_CHARACTERS
+                val isInputValid = (input?.length ?: 0) >= Constants.VALIDATION_MINIMUM_CHARACTERS
 
                 // Show/hide error message based on input validity
-                if (!isInputValid) {
-                    binding.etEmailInput.error = getString(R.string.input_validation_error)
-                } else {
-                    binding.etEmailInput.error = null // Clear error if input is valid
-                }
+                binding.etEmailInput.error =
+                    if (isInputValid) null else getString(R.string.input_validation_error)
             }
-            override fun afterTextChanged(s: Editable?) {}
+
+            override fun afterTextChanged(input: Editable?) {}
         })
         binding.etPasswordInput.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun beforeTextChanged(input: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(input: CharSequence?, start: Int, before: Int, count: Int) {
                 // Check if the input is valid (e.g., more than 3 characters)
-                val isInputValid = (s?.length ?: 0) >= Constants.VALIDATION_MINIMUM_CHARACTERS
+                val isInputValid = (input?.length ?: 0) >= Constants.VALIDATION_MINIMUM_CHARACTERS
 
                 // Show/hide error message based on input validity
-                if (!isInputValid) {
-                    binding.etPasswordInput.error = getString(R.string.input_validation_error)
-                } else {
-                    binding.etPasswordInput.error = null // Clear error if input is valid
-                }
+                binding.etPasswordInput.error =
+                    if (isInputValid) null else getString(R.string.input_validation_error)
             }
-            override fun afterTextChanged(s: Editable?) {}
+
+            override fun afterTextChanged(input: Editable?) {}
         })
         binding.btLogin.setOnClickListener {
             val email = binding.etEmailInput.text.toString()
             val password = binding.etPasswordInput.text.toString()
-            if(email.length >= Constants.VALIDATION_MINIMUM_CHARACTERS && password.length >= Constants.VALIDATION_MINIMUM_CHARACTERS ) {
+            if (email.length >= Constants.VALIDATION_MINIMUM_CHARACTERS && password.length >= Constants.VALIDATION_MINIMUM_CHARACTERS) {
                 val success = authViewModel.isUserInfoValid(email, password)
-                if(success) {
+                if (success) {
                     communicator.setCurrentLoggedInUser(binding.etEmailInput.text.toString())
                     showSuccessPopUp(
                         getString(R.string.login_success_message),
-                            R.id.action_loginFragment_to_cocktailsFragment
-                        )
+                        R.id.action_loginFragment_to_cocktailsFragment
+                    )
                 }
             }
         }

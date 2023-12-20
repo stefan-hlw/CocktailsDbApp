@@ -16,16 +16,20 @@ fun RoomCocktail.toCocktail(isFavorite: Boolean): Cocktail {
     return Cocktail(strDrink, strDrinkThumb, idDrink, isFavorite)
 }
 
-fun TextView.makeLastNCharactersBold(n: Int) {
+fun TextView.makeLastNCharactersBold(characterCount: Int) {
     val currentText = text.toString()
 
     // Check if the text has at least N characters
-    if (currentText.length >= n) {
+    if (currentText.length >= characterCount) {
         val spannable = SpannableStringBuilder(currentText)
 
         // Apply bold style to the last N characters
-        val boldStyle = StyleSpan(Typeface.BOLD)
-        spannable.setSpan(boldStyle, currentText.length - n, currentText.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+        spannable.setSpan(
+            StyleSpan(Typeface.BOLD),
+            currentText.length - characterCount,
+            currentText.length,
+            Spannable.SPAN_INCLUSIVE_INCLUSIVE
+        )
 
         // Set the text with the applied styles
         text = spannable
@@ -59,7 +63,8 @@ fun CocktailDetails.toCocktail(): Cocktail {
 }
 
 fun CocktailDetailsResponse.toCocktailsResponse(): CocktailResponse {
-    val cocktails = drinks?.map { it.toCocktail() }
-    return CocktailResponse(cocktails)
+    return CocktailResponse(
+        drinks?.map { it.toCocktail() }
+    )
 }
 

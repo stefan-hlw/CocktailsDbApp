@@ -36,10 +36,10 @@ class FilterFragment : BaseFragment<FragmentFilterBinding>(FragmentFilterBinding
     }
 
     private fun setObservers() {
-        filterViewModel.filterData.observe(viewLifecycleOwner) {
-            setFilterAdapter(it)
-            it?.let {
-                filterAdapter?.updateData(it)
+        filterViewModel.filterData.observe(viewLifecycleOwner) { filters ->
+            setFilterAdapter(filters)
+            filters?.let {
+                filterAdapter?.updateData(filters)
             }
         }
     }
