@@ -55,7 +55,12 @@ class CocktailDetailsFragment: BaseFragment<FragmentCocktailDetailsBinding>(Frag
     }
 
     private fun setIngredientsAdapter(ingredients: List<Pair<String, String>>?) {
-        ingredientsAdapter = ingredients?.let { IngredientsAdapter(it) }
-        binding.rvIngredients.adapter = ingredientsAdapter
+        ingredientsAdapter = IngredientsAdapter()
+        ingredientsAdapter.let { adapter ->
+            ingredients?.let {
+                adapter?.updateData(it) }
+            binding.rvIngredients.adapter = adapter
+        }
+
     }
 }

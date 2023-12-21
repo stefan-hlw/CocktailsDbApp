@@ -34,7 +34,7 @@ class CocktailAdapter(
     }
 
     override fun bindItem(holder: ViewHolder, item: Cocktail) {
-        with(binding) {
+        with(holder.binding) {
             tvCocktailName.text = item.strDrink
             ivFavorite.isSelected = item.isFavorite
 
@@ -53,10 +53,8 @@ class CocktailAdapter(
                     } else {
                         R.anim.ic_favorite_animation_deselect // Deselection animation
                     }
-                    val animation = AnimationUtils.loadAnimation(root.context, animationId)
-
                     // Apply the animation to the ImageView
-                    ivFavorite.startAnimation(animation)
+                    ivFavorite.startAnimation(AnimationUtils.loadAnimation(root.context, animationId))
 
                     onFavoriteClickListener?.favoriteCocktail(item)
 

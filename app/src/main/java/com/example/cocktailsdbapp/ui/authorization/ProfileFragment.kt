@@ -20,18 +20,20 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initUi()
         setListeners()
     }
 
     override fun onStart() {
         super.onStart()
         communicator.apply {
-            getCurrentLoggedInUser()?.let { authViewModel.getUserData(it) }
+            getCurrentLoggedInUser()?.let {
+                user = authViewModel.getUserData(it)
+            }
             showSearchIconView(true)
             showSearchInputView(false)
             showFilterView(true)
         }
+        initUi()
     }
 
     private fun setListeners() {

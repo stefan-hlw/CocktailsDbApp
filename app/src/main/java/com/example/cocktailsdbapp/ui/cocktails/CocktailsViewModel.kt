@@ -32,8 +32,9 @@ class CocktailsViewModel @Inject constructor(private val cocktailsRepo: Cocktail
                         CocktailResponse(null)
                     }
                 }
-                val favorites = cocktailsRepo.getFavorites(userEmail)
-                val processedResponse = favorites?.let { response.markFavorites(it) }
+                val processedResponse = cocktailsRepo.getFavorites(userEmail)?.let {
+                    response.markFavorites(it)
+                }
                 // Handle the response
                 cocktailsData.postValue(processedResponse?.drinks)
             } catch (e: Exception) {

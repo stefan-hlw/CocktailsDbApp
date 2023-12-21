@@ -2,7 +2,6 @@ package com.example.cocktailsdbapp.ui
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -17,13 +16,12 @@ abstract class BaseAdapter<T, VB : ViewBinding>(
 
     private var _binding: VB? = null
     val binding get() = _binding!!
-
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class ViewHolder(val binding: VB) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
         _binding = inflate.invoke(LayoutInflater.from(context), parent, false)
-        return ViewHolder(binding.root)
+        return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int = data.size

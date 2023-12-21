@@ -34,10 +34,10 @@ class FavoritesFragment: BaseFragment<FragmentFavoritesBinding>(FragmentFavorite
     }
 
     private fun setObservers() {
-        favoritesViewModel.favoritesData.observe(viewLifecycleOwner) {
-            setCocktailsAdapter(it)
-            it?.let {
-                cocktailAdapter?.updateData(it)
+        favoritesViewModel.favoritesData.observe(viewLifecycleOwner) { favoriteCocktailsData ->
+            setCocktailsAdapter(favoriteCocktailsData)
+            favoriteCocktailsData?.let {
+                cocktailAdapter?.updateData(favoriteCocktailsData)
             }
         }
     }

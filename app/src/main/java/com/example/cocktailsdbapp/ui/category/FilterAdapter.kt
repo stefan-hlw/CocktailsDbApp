@@ -12,8 +12,8 @@ class FilterAdapter(private val onItemClickListener: OnItemClickListener? = null
     ) {
 
     override fun bindItem(holder: ViewHolder, item: String) {
-        binding.tvFilterText.text = item
-        binding.clFilterView.setOnClickListener {
+        holder.binding.tvFilterText.text = item
+        holder.binding.clFilterView.setOnClickListener {
             onItemClickListener?.openFilter(item)
         }
     }
