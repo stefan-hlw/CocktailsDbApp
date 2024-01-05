@@ -14,8 +14,8 @@
 
     <ImageView
         android:id="@+id/iv_drink"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/match_constraint"
+        android:layout_height="@dimen/match_constraint"
         android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv_glass"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="10sp"
+        android:layout_marginTop="@dimen/query_param_margin_end"
         app:animDuration="200"
         app:maxCollapsedLines="2">
 
@@ -58,9 +58,9 @@
             android:id="@id/expandable_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp"
-            android:textSize="16sp" />
+            android:layout_marginLeft="@dimen/query_param_margin_end"
+            android:layout_marginRight="@dimen/query_param_margin_end"
+            android:textSize="@dimen/expandable_text_size" />
 
         <ImageButton
             android:id="@id/expand_collapse"
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:background="@android:color/transparent"
-            android:padding="16sp" />
+            android:padding="@dimen/expandable_text_size" />
 
     </com.ms.square.android.expandabletextview.ExpandableTextView>
 
@@ -78,8 +78,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/expand_text_view"
-        android:textSize="19sp"
-        android:text="Ingredients: "
+        android:textSize="@dimen/ingredient_text_size"
+        android:text="@string/ingredients"
         />
 
     <androidx.recyclerview.widget.RecyclerView

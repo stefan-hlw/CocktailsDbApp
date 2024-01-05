@@ -59,7 +59,7 @@
         app:cornerRadius="0dp"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:textSize="17sp"
+        android:textSize="@dimen/auth_button_text_size"
         android:drawableLeft="@drawable/ic_login"
         android:text="@string/button_login"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +80,7 @@
         app:layout_constraintTop_toBottomOf="@id/bt_login">
         <View
             android:id="@+id/v_spacer_left"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/match_constraint"
             android:layout_height="@dimen/spacer_height"
             android:layout_weight="1"
             android:layout_marginEnd="@dimen/spacer_horizontal_margin"
@@ -97,7 +97,7 @@
         <View
             android:id="@+id/v_spacer_right"
             android:layout_marginStart="@dimen/spacer_horizontal_margin"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/match_constraint"
             android:layout_height="@dimen/spacer_height"
             android:layout_weight="1"
             android:background="@color/white"/>
@@ -109,10 +109,10 @@
         android:layout_height="@dimen/auth_button_height"
         android:layout_marginTop="@dimen/register_button_margin_top"
         android:background="@drawable/button_auth_blur"
-        app:cornerRadius="0dp"
+        app:cornerRadius="@dimen/match_constraint"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:textSize="17sp"
+        android:textSize="@dimen/auth_button_text_size"
         android:text="@string/button_register"
         android:drawableLeft="@drawable/ic_register_white"
         app:layout_constraintEnd_toEndOf="parent"

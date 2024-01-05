@@ -10,7 +10,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="3dp"
+        app:cardElevation="@dimen/cocktail_item_elevation"
         app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,15 +21,15 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_item"
             android:layout_width="match_parent"
-            android:padding="5dp"
+            android:padding="@dimen/cocktail_item_padding"
             android:layout_height="match_parent"
             android:clipChildren="false"
             android:clipToPadding="false">
 
             <ImageView
                 android:id="@+id/iv_drink"
-                android:layout_width="0dp"
-                android:layout_height="240dp"
+                android:layout_width="@dimen/match_constraint"
+                android:layout_height="@dimen/cocktail_item_image_height"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -39,8 +39,8 @@
                 android:id="@+id/tv_cocktail_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:textSize="14sp"
+                android:paddingTop="@dimen/cocktail_item_padding"
+                android:textSize="@dimen/cocktail_adapter_title_text_size"
                 android:maxLines="1"
                 android:ellipsize="end"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +51,7 @@
                 android:id="@+id/iv_favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/cocktail_item_padding"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_favorite_selector"
                 app:layout_constraintEnd_toEndOf="parent"

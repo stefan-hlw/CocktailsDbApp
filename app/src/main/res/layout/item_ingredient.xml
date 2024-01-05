@@ -2,16 +2,16 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cl_ingredient"
     android:layout_width="match_parent"
-    android:layout_height="44dp"
+    android:layout_height="@dimen/ingredient_rv_height"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/outline_filter_field">
 
     <TextView
         android:id="@+id/tv_ingredient"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/match_constraint"
         android:layout_height="wrap_content"
-        android:textSize="19sp"
-        android:layout_marginStart="10dp"
+        android:textSize="@dimen/ingredient_adapter_text_size"
+        android:layout_marginStart="@dimen/ingredient_rv_margin"
         android:textAlignment="viewStart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tv_measure"
@@ -21,10 +21,10 @@
 
     <TextView
         android:id="@+id/tv_measure"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/match_constraint"
         android:layout_height="wrap_content"
-        android:textSize="19sp"
-        android:layout_marginEnd="10dp"
+        android:textSize="@dimen/ingredient_adapter_text_size"
+        android:layout_marginEnd="@dimen/ingredient_rv_margin"
         android:textAlignment="viewEnd"
         app:layout_constraintStart_toEndOf="@id/tv_ingredient"
         app:layout_constraintEnd_toEndOf="parent"
