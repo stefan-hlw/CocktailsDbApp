@@ -9,7 +9,7 @@
         android:id="@+id/tv_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit Profile"
+        android:text="@string/edit_profile"
         android:textSize="@dimen/auth_label_text_size"
         android:layout_marginTop="@dimen/auth_label_margin_top"
         android:textColor="@color/black"
@@ -63,7 +63,7 @@
             android:inputType="textPassword"
             android:enabled="false"
             android:textColor="@color/black"
-            android:padding="0dp"
+            android:padding="@dimen/match_constraint"
             android:gravity="center"
             />
     </com.google.android.material.textfield.TextInputLayout>
@@ -77,14 +77,14 @@
         android:gravity="center"
         android:layout_marginStart="@dimen/spacer_horizontal_margin"
         android:layout_marginEnd="@dimen/spacer_horizontal_margin"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="@dimen/profile_spacer_top_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_password_input">
         <View
             android:id="@+id/v_spacer_left"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
+            android:layout_width="@dimen/match_constraint"
+            android:layout_height="@dimen/spacer_height"
             android:layout_weight="1"
             android:layout_marginEnd="@dimen/spacer_horizontal_margin"
             android:background="#FFFFFF"/>
@@ -100,7 +100,7 @@
         <View
             android:id="@+id/v_spacer_right"
             android:layout_marginStart="@dimen/spacer_horizontal_margin"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/match_constraint"
             android:layout_height="@dimen/spacer_height"
             android:layout_weight="1"
             android:background="@color/white"/>
@@ -112,19 +112,19 @@
         android:layout_height="@dimen/auth_button_height"
         android:layout_marginTop="@dimen/register_button_margin_top"
         android:background="@drawable/button_auth_blur"
-        app:cornerRadius="0dp"
+        app:cornerRadius="@dimen/match_constraint"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:textSize="17sp"
-        android:text="Logout"
+        android:textSize="@dimen/auth_button_text_size"
+        android:text="@string/logout"
         android:drawableLeft="@drawable/ic_login_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_spacer" />
 
     <ImageView
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="@dimen/auth_image_margin"
+        android:layout_marginBottom="@dimen/auth_image_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/cuba_libre"

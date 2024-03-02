@@ -1,72 +1,57 @@
 package com.example.cocktailsdbapp.ui.cocktails
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.cocktailsdbapp.MainActivity
 import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentFavoritesBinding
 import com.example.cocktailsdbapp.model.Cocktail
+import com.example.cocktailsdbapp.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavoritesFragment: Fragment(), CocktailAdapter.OnFavoriteClickListener, CocktailAdapter.OnItemClickListener {
-
-    private var _binding: FragmentFavoritesBinding? = null
-    private val binding get() = _binding!!
+class FavoritesFragment: BaseFragment<FragmentFavoritesBinding>(FragmentFavoritesBinding::inflate), CocktailAdapter.OnFavoriteClickListener, CocktailAdapter.OnItemClickListener {
 
     private val favoritesViewModel: FavoritesViewModel by viewModels()
 
     private var cocktailAdapter: CocktailAdapter? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObservers()
-        (activity as MainActivity).let { mainActivity ->
-            mainActivity.currentUser?.let { favoritesViewModel.getFavorites(it) }
-            mainActivity.showSearchIconView(true)
-            mainActivity.showSearchInputView(false)
-            mainActivity.showFilterView(true)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        communicator.apply {
+            getCurrentLoggedInUser()?.let { favoritesViewModel.getFavorites(it) }
+            showSearchIconView(true)
+            showSearchInputView(false)
+            showFilterView(true)
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     private fun setObservers() {
-        favoritesViewModel.favoritesData.observe(viewLifecycleOwner) {
-            setCocktailsAdapter(it)
-            it?.let {
-                cocktailAdapter?.updateData(it)
+        favoritesViewModel.favoritesData.observe(viewLifecycleOwner) { favoriteCocktailsData ->
+            setCocktailsAdapter(favoriteCocktailsData)
+            favoriteCocktailsData?.let {
+                cocktailAdapter?.updateData(favoriteCocktailsData)
             }
         }
     }
 
     private fun setCocktailsAdapter(cocktails: List<Cocktail>?) {
-        cocktailAdapter = cocktails?.let { CocktailAdapter(it) }
-        cocktailAdapter?.setOnItemClickListener(this)
-        cocktailAdapter?.setOnFavoriteClickListener(this)
-        binding.rvCocktails.adapter = cocktailAdapter
+        cocktailAdapter = CocktailAdapter(this, this)
+        cocktailAdapter?.let { adapter ->
+            cocktails?.let { items -> adapter.updateData(items) }
+            binding.rvCocktails.adapter = adapter
+        }
     }
 
     override fun favoriteCocktail(cocktail: Cocktail) {
-        (activity as MainActivity).currentUser?.let {
+        communicator.getCurrentLoggedInUser()?.let {
             favoritesViewModel.favoriteCocktail(
                 it,
                 cocktail
@@ -75,9 +60,8 @@ class FavoritesFragment: Fragment(), CocktailAdapter.OnFavoriteClickListener, Co
     }
 
     override fun openCocktailDetails(cocktailId: String) {
-        val args = bundleOf("cocktailId" to cocktailId)
+        val args = bundleOf(getString(R.string.argument_cocktail_id) to cocktailId)
         findNavController().navigate(R.id.action_favoritesFragment_to_CocktailDetailsFragment, args)
     }
-
 
 }

@@ -1,24 +1,18 @@
 package com.example.cocktailsdbapp.ui.category
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.cocktailsdbapp.MainActivity
 import com.example.cocktailsdbapp.R
 import com.example.cocktailsdbapp.databinding.FragmentFilterBinding
+import com.example.cocktailsdbapp.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FilterFragment : Fragment(), FilterAdapter.OnItemClickListener {
-
-    private var _binding: FragmentFilterBinding? = null
-    private val binding get() = _binding!!
+class FilterFragment : BaseFragment<FragmentFilterBinding>(FragmentFilterBinding::inflate), FilterAdapter.OnItemClickListener {
 
     private val filterViewModel: FilterViewModel by viewModels()
 
@@ -26,49 +20,40 @@ class FilterFragment : Fragment(), FilterAdapter.OnItemClickListener {
 
     private val args: FilterFragmentArgs by navArgs()
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentFilterBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObservers()
+    }
+
+    override fun onStart() {
+        super.onStart()
         filterViewModel.fetchData(args.filter)
-        (activity as MainActivity).let {
-            it.showSearchIconView(false)
-            it.showSearchInputView(false)
-            it.showFilterView(false)
+        communicator.apply {
+            showSearchIconView(false)
+            showSearchInputView(false)
+            showFilterView(false)
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     private fun setObservers() {
-        filterViewModel.filterData.observe(viewLifecycleOwner) {
-            setFilterAdapter(it)
-            it?.let {
-                filterAdapter?.updateData(it)
+        filterViewModel.filterData.observe(viewLifecycleOwner) { filters ->
+            setFilterAdapter(filters)
+            filters?.let {
+                filterAdapter?.updateData(filters)
             }
         }
     }
 
     private fun setFilterAdapter(filters: List<String>?) {
-        filterAdapter = filters?.let { FilterAdapter(it) }
-        filterAdapter?.setOnItemClickListener(this)
-        binding.rvFilter.adapter = filterAdapter
+        filterAdapter = FilterAdapter(this)
+        filterAdapter?.let { adapter ->
+            filters?.let { items -> adapter.updateData(items) }
+            binding.rvFilter.adapter = adapter
+        }
     }
 
     override fun openFilter(filter: String) {
-        val args = bundleOf("filterCategory" to args.filter, "filter" to filter)
+        val args = bundleOf(getString(R.string.argument_filter_category) to args.filter, getString(R.string.argument_filter) to filter)
         findNavController().navigate(R.id.action_filterFragment_to_CocktailsFragment, args)
     }
 }

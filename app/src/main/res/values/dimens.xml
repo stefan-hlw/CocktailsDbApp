@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="match_constraint">0dp</dimen>
+
+    <dimen name="toolbar_elevation">16dp</dimen>
+    <dimen name="toolbar_padding">5dp</dimen>
+    <dimen name="bottom_nav_height">60dp</dimen>
+
     <dimen name="auth_label_margin_top">80dp</dimen>
     <dimen name="input_field_height">41dp</dimen>
     <dimen name="input_field_width">320dp</dimen>
     <dimen name="input_field_marginTop">10dp</dimen>
+    <dimen name="profile_spacer_top_margin">40dp</dimen>
 
     <dimen name="auth_button_height">44dp</dimen>
     <dimen name="auth_button_width">107dp</dimen>
     <dimen name="login_button_margin_top">20dp</dimen>
     <dimen name="register_button_margin_top">10dp</dimen>
+    <dimen name="auth_image_margin">50dp</dimen>
 
     <dimen name="spacer_horizontal_margin">20dp</dimen>
     <dimen name="spacer_height">1dp</dimen>
@@ -18,6 +26,30 @@
 
     <dimen name="rv_bottom_margin">16dp</dimen>
 
+    <!-- Filter RV item !-->
+    <dimen name="filter_rv_margin">24dp</dimen>
+    <dimen name="filter_rv_height">44dp</dimen>
+
+    <dimen name="category_rv_image_margin_end">12dp</dimen>
+    <dimen name="query_param_margin_end">10dp</dimen>
+
+    <!-- Ingredient RV item !-->
+    <dimen name="ingredient_rv_margin">10dp</dimen>
+    <dimen name="ingredient_rv_height">44dp</dimen>
+
+    <!-- Cocktail RV item !-->
+    <dimen name="cocktail_item_elevation">3dp</dimen>
+    <dimen name="cocktail_item_padding">5dp</dimen>
+    <dimen name="cocktail_item_image_height">240dp</dimen>
+
+    <dimen name="query_param_text_height">24dp</dimen>
+
     <!-- Font size !-->
     <dimen name="auth_label_text_size">22sp</dimen>
+    <dimen name="ingredient_adapter_text_size">19sp</dimen>
+    <dimen name="filter_adapter_text_size">19sp</dimen>
+    <dimen name="cocktail_adapter_title_text_size">14sp</dimen>
+    <dimen name="auth_button_text_size">17sp</dimen>
+    <dimen name="expandable_text_size">16sp</dimen>
+    <dimen name="ingredient_text_size">19sp</dimen>
 </resources>

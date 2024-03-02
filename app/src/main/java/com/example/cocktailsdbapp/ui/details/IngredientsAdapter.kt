@@ -1,33 +1,36 @@
 package com.example.cocktailsdbapp.ui.details
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
 import com.example.cocktailsdbapp.databinding.ItemIngredientBinding
+import com.example.cocktailsdbapp.ui.BaseAdapter
 
-class IngredientsAdapter(private val ingredientsWithMeasures: List<Pair<String, String>>) :
-    RecyclerView.Adapter<IngredientsAdapter.IngredientViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
-        val binding =
-            ItemIngredientBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return IngredientViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: IngredientViewHolder, position: Int) {
-        holder.bind(ingredientsWithMeasures[position])
-    }
-
-    override fun getItemCount(): Int = ingredientsWithMeasures.size
-
-    inner class IngredientViewHolder(private val binding: ItemIngredientBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(ingredientWithMeasure: Pair<String, String>) {
-            with(binding) {
-                tvIngredient.text = ingredientWithMeasure.first
-                tvMeasure.text = ingredientWithMeasure.second
-            }
+class IngredientsAdapter :
+    BaseAdapter<Pair<String, String>, ItemIngredientBinding>(
+        inflate = { inflater, parent, attachToParent ->
+            ItemIngredientBinding.inflate(inflater, parent, attachToParent)
         }
+    ) {
+
+    override fun bindItem(holder: ViewHolder, item: Pair<String, String>) {
+        with(holder.binding) {
+            tvIngredient.text = item.first
+            tvMeasure.text = item.second
+        }
+    }
+
+    override fun getDiffCallback(
+        oldList: List<Pair<String, String>>,
+        newList: List<Pair<String, String>>
+    ): DiffUtil.Callback {
+        return DiffCallback(
+            oldList = oldList,
+            newList = newList,
+            areItemsTheSame = { oldItem, newItem ->
+                oldItem.first == newItem.first
+            },
+            areContentsTheSame = { oldItem, newItem ->
+                oldItem == newItem
+            }
+        )
     }
 }

@@ -7,8 +7,6 @@ import com.example.cocktailsdbapp.model.CocktailResponse
 import com.example.cocktailsdbapp.model.FilterResponse
 import com.example.cocktailsdbapp.model.GlassesResponse
 import com.example.cocktailsdbapp.model.IngredientListResponse
-import retrofit2.http.GET
-import retrofit2.http.Query
 
 interface CocktailsRepo {
 
