@@ -13,6 +13,7 @@ app-compat = "1.6.1"
 constraint-layout = "2.1.4"
 logging-interceptor = "4.9.3"
 material = "1.10.0"
+mockitoKotlin = "5.4.0"
 navigation-fragment-ktx = "2.7.5"
 retrofit = "2.9.0"
 room-ktx = "2.6.1"
@@ -37,6 +38,7 @@ hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", ve
 junit = { module = "junit:junit", version.ref = "junit" }
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "logging-interceptor" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 
 [plugins]
